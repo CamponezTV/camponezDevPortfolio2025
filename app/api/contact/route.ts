@@ -6,7 +6,7 @@ export async function OPTIONS(request: NextRequest) {
   return new NextResponse(null, {
     status: 200,
     headers: {
-      'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+      'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SITE_URL || 'https://camponez.com.br',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, X-CSRF-Token',
       'Access-Control-Max-Age': '86400',
@@ -322,7 +322,7 @@ export async function POST(request: NextRequest) {
       { 
         status: 200,
         headers: {
-          'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+          'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SITE_URL || 'https://camponez.com.br',
         }
       }
     )
@@ -339,7 +339,7 @@ export async function POST(request: NextRequest) {
       { 
         status: 500,
         headers: {
-          'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+          'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_SITE_URL || 'https://camponez.com.br',
         }
       }
     )
