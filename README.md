@@ -168,36 +168,9 @@ The project includes several optimizations:
 - Safari: Latest 2 versions
 - Mobile: iOS 12+, Android 8+
 
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push code to GitHub
-2. Import project to Vercel
-3. Add environment variables
-4. Deploy
-
-```bash
-vercel
-```
-
-### Docker
-
-```bash
-docker build -t camponez-dev .
-docker run -p 3000:3000 camponez-dev
-```
-
-### Manual deployment
-
-```bash
-pnpm build
-pnpm start
-```
-
 ## Support
 
 For issues, questions, or feedback:
 - GitHub Issues: Report bugs and request features
-- Email: contact@example.com
+- Email: arthurcamponez2020@gmail.com
 - LinkedIn: [Arthur Camponez](https://linkedin.com/in/arthurcmarinho)
