@@ -5,7 +5,7 @@
 
 interface EnvironmentConfig {
   NEXT_PUBLIC_SITE_URL: string
-  NEXT_PUBLIC_BREVO_API_KEY?: string
+  BREVO_API_KEY?: string
   NODE_ENV: 'development' | 'production' | 'test'
 }
 
@@ -32,9 +32,9 @@ export function validateEnv(): EnvironmentConfig {
   }
 
   // Validate Brevo API Key format (should be alphanumeric)
-  const brevoKey = process.env.NEXT_PUBLIC_BREVO_API_KEY
+  const brevoKey = process.env.BREVO_API_KEY
   if (brevoKey && !/^[a-zA-Z0-9]+$/.test(brevoKey)) {
-    throw new Error('Invalid NEXT_PUBLIC_BREVO_API_KEY format')
+    throw new Error('Invalid BREVO_API_KEY format')
   }
 
   const nodeEnv = (process.env.NODE_ENV as 'development' | 'production' | 'test') || 'development'
@@ -45,7 +45,7 @@ export function validateEnv(): EnvironmentConfig {
 
   return {
     NEXT_PUBLIC_SITE_URL: siteUrl,
-    NEXT_PUBLIC_BREVO_API_KEY: brevoKey,
+    BREVO_API_KEY: brevoKey,
     NODE_ENV: nodeEnv,
   }
 }

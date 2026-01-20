@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
     const sanitizedMessage = sanitizeInput(message)
 
     // Verify environment variables
-    if (!process.env.NEXT_PUBLIC_BREVO_API_KEY) {
+    if (!process.env.BREVO_API_KEY) {
       console.error('BREVO_API_KEY não configurada')
       return NextResponse.json(
         { error: 'Serviço de email não configurado' },

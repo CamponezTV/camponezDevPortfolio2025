@@ -27,7 +27,7 @@ pnpm install
 Create a `.env.local` file in the root directory:
 
 ```env
-NEXT_PUBLIC_BREVO_API_KEY=your_brevo_api_key_here
+BREVO_API_KEY=your_brevo_api_key_here
 ```
 
 To get a Brevo API key:
