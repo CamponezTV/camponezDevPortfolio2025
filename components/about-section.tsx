@@ -128,11 +128,11 @@ export function AboutSection() {
                   <motion.div
                     key={i}
                     whileHover={{ y: -5, scale: 1.02 }}
-                    className="p-2 sm:p-4 rounded-lg sm:rounded-xl bg-card border border-border hover:border-primary/50 transition-colors group"
+                    className="p-3 sm:p-3 rounded-lg sm:rounded-xl bg-card border border-border hover:border-primary/50 transition-colors group text-center flex flex-col items-center"
                   >
-                    <item.icon className="w-6 sm:w-7 md:w-8 h-6 sm:h-7 md:h-8 text-primary mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
-                    <h3 className="font-semibold text-xs sm:text-sm md:text-base text-foreground line-clamp-1 break-words">{highlightText.title}</h3>
-                    <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 line-clamp-2 break-words">{highlightText.description}</p>
+                    <item.icon className="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 text-primary mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
+                    <h3 className="font-semibold text-sm sm:text-base md:text-lg text-foreground line-clamp-1 break-words">{highlightText.title}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2 break-words">{highlightText.description}</p>
                   </motion.div>
                 )
               })}

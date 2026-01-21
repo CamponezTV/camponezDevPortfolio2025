@@ -37,7 +37,7 @@ export const translations = {
         { title: 'Performance', description: '100% não é o suficiente se posso focar 110%' },
         { title: 'Paixão', description: 'Sempre se divertir e aprender no processo' },
       ],
-      badge: 'Desde',
+      badge: 'Desenvolvendo desde',
       roadmaps: {
         companies: {
           title: 'Experiência Profissional',
@@ -414,7 +414,7 @@ export const translations = {
         { title: 'Performance', description: '100% is not enough if I can achieve 110%' },
         { title: 'Passion', description: 'Always have fun and learn in the process' },
       ],
-      badge: 'Since',
+      badge: 'Developing since',
       roadmaps: {
         companies: {
           title: 'Professional Experience',
