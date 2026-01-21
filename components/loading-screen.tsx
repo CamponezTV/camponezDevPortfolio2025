@@ -9,6 +9,43 @@ export function LoadingScreen() {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
+    // Bloquear scroll enquanto está carregando
+    if (isLoading) {
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      document.body.style.touchAction = 'none'
+
+      // Prevenir scroll com wheel e touch
+      const preventScroll = (e: Event) => {
+        e.preventDefault()
+      }
+
+      document.addEventListener('wheel', preventScroll, { passive: false })
+      document.addEventListener('touchmove', preventScroll, { passive: false })
+      document.addEventListener('scroll', preventScroll)
+
+      return () => {
+        document.documentElement.style.overflow = ''
+        document.body.style.overflow = ''
+        document.body.style.position = ''
+        document.body.style.width = ''
+        document.body.style.touchAction = ''
+        document.removeEventListener('wheel', preventScroll)
+        document.removeEventListener('touchmove', preventScroll)
+        document.removeEventListener('scroll', preventScroll)
+      }
+    } else {
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+      document.body.style.touchAction = ''
+    }
+  }, [isLoading])
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
