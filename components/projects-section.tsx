@@ -39,6 +39,8 @@ export function ProjectsSection() {
       "/vendeai-logo.svg",
       "/banestes.png",
       "/novasyn.png",
+      "/portfolio-2024.png",
+      "",
     ][i],
     tags: item.tags,
     link: [
@@ -46,12 +48,16 @@ export function ProjectsSection() {
       "https://novasyn.com.br/#portfolio",
       "https://www.banestesasset.com.br/",
       "https://novasyn.com.br",
+      "https://my-portfolio-six-kappa-14.vercel.app/",
+      "",
     ][i],
     github: [
       "",
       "",
       "",
       "https://github.com/CamponezTV/NovaSyn-LTDA",
+      "https://github.com/CamponezTV/my-portfolio",
+      "https://github.com/CamponezTV/camponezDevPortfolio2025",
     ][i],
   }))
 
@@ -115,7 +121,7 @@ export function ProjectsSection() {
           </motion.div>
 
           {/* Projects */}
-          {projects.map((project, i) => (
+          {projects.slice(0, 4).map((project, i) => (
             <motion.article
               key={project.id}
               initial={{ opacity: 0, y: 100 }}

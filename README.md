@@ -89,12 +89,39 @@ pnpm start
 ├── hooks/               # Custom hooks
 ├── lib/                 # Utilities
 ├── public/              # Static assets
+│   └── resume/          # Resume files (PT/EN)
 ├── __tests__/           # Test files
 ├── config/              # Configuration files
 ├── package.json         # Dependencies and scripts
 ├── tsconfig.json        # TypeScript configuration
 ├── tailwind.config.ts   # Tailwind CSS configuration
 └── next.config.mjs      # Next.js configuration
+```
+
+## Projects Section
+
+### Main Projects (Section Display - 4 Featured)
+1. **Xmetal Token** - Crypto e-commerce platform with Mercado Pago integration
+2. **Vende.AI** - WhatsApp sales automation with AI
+3. **Banestes Asset** - Institutional financial platform
+4. **Novasyn LTDA** - Complete institutional platform with Brevo email integration
+
+### Additional Projects (Catalog Modal - 2 More)
+5. **Portfolio 2024** - Previous portfolio with Three.js 3D globe, dark/light mode, full i18n
+6. **Portfolio 2026** - Current portfolio with advanced animations, parallax, Embla Carousel
+
+### Project Display Logic
+- **projects-section.tsx:** Shows only first 4 projects using `.slice(0, 4)`
+- **projects-catalog.tsx:** Shows all 6 projects in "Ver Mais" modal
+- **projects-section.tsx:** `.slice(0, 4)` ensures Portfolio 2024 and 2026 don't appear in main section
+
+### Projects Array Configuration
+
+Both `projects-section.tsx` and `projects-catalog.tsx` map projects with:
+```typescript
+image: ["/Xmetal.png", "/vendeai-logo.svg", "/banestes.png", "/novasyn.png", "/portfolio-2024.png", ""][i]
+link: ["xmetal-url", "vendeai-url", "banestes-url", "novasyn-url", "portfolio2024-url", ""][i]
+github: ["", "", "", "novasyn-github", "portfolio2024-github", "portfolio2026-github"][i]
 ```
 
 ## Customization
@@ -114,9 +141,107 @@ export const metadata: Metadata = {
 
 Edit `config/translations.ts` to add or modify content in Portuguese and English.
 
+Translations include:
+- Navigation items
+- Hero section content
+- About section
+- Skills with 45+ technologies
+- 6 Featured projects with full details
+- Gallery section
+- Contact form
+- Footer
+
 ### Modify theme colors
 
 Update Tailwind CSS variables in `app/globals.css` and `tailwind.config.ts`.
+
+### Update project information
+
+Projects are stored in `config/translations.ts` under `projects.items`. Each project includes:
+- `title` - Project name
+- `category` - Project category
+- `description` - Short description (shown in section)
+- `tags` - Technology stack array
+- `details` - Detailed information object with:
+  - `challenge` - Project challenge
+  - `solution` - How it was solved
+  - `results` - Results achieved
+  - `timeline` - Development timeline
+  - `team` - Team information
+  - `learnings` - Key learnings
+
+### Add new project
+
+1. Add project data to `config/translations.ts` (both `pt` and `en`)
+2. Update image array in `projects-section.tsx` (if displaying)
+3. Update link array in both components
+4. Update github array in both components
+5. Update `.slice(0, 4)` limit if adding to main section
+
+## Testing
+
+### Run tests
+
+```bash
+pnpm test
+```
+
+### Run tests in watch mode
+
+```bash
+pnpm test:watch
+```
+
+### Generate coverage report
+
+```bash
+pnpm test:coverage
+```
+
+### Test Coverage
+
+Tests are included for:
+- Translations validation (6 projects, PT/EN parity)
+- Component rendering
+- Hook functionality
+- Utility functions
+- Context providers
+- UI components
+
+Key test additions:
+- `translations.test.ts`: Validates 6 projects structure and Portal 2024/2026 data
+- Component tests ensure proper rendering and conditional display
+
+## Features
+
+### Dynamic Project Display
+- Main section shows 4 featured projects
+- Modal catalog shows all 6 projects
+- Conditional image rendering (empty strings don't render)
+- Conditional button display (links and GitHub URLs)
+
+### Responsive Design
+- Mobile-first approach
+- Tailwind CSS responsive utilities
+- Tested on 375px (iPhone SE) and up
+- Touch-friendly interactions
+
+### Animations
+- Framer Motion for smooth animations
+- Skills carousel with 45+ technologies
+- Parallax scroll effects
+- Embla Carousel for interactive tech showcase
+
+### Internationalization (i18n)
+- Portuguese (pt) and English (en) support
+- Language persistence in localStorage
+- All content translated
+- Custom translation hook
+
+### Dark/Light Mode
+- Theme toggle in navigation
+- Persistent theme preference
+- Smooth transitions
 
 ## Troubleshooting
 
@@ -151,6 +276,14 @@ pnpm lint
 pnpm build
 ```
 
+### Portfolio 2024/2026 not appearing correctly
+
+Check that:
+- Images exist in `/public/` folder
+- Arrays in `projects-section.tsx` and `projects-catalog.tsx` have correct length (6 items)
+- `.slice(0, 4)` is applied in `projects-section.tsx`
+- Both components have matching array configurations
+
 ## Performance Optimization
 
 The project includes several optimizations:
@@ -160,6 +293,7 @@ The project includes several optimizations:
 - **Lazy Loading:** Intersection Observer for viewport-based loading
 - **CSS Optimization:** Minimal CSS with Tailwind CSS
 - **Font Optimization:** next/font for self-hosted fonts
+- **Carousel Performance:** Embla Carousel with drag-free mode and infinite loop
 
 ## Browser Support
 

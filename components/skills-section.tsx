@@ -1,20 +1,27 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { useRef, useState, useEffect } from "react"
+import { motion, useInView, useScroll, useTransform } from "framer-motion"
 import { useTranslations } from "@/hooks/use-translations"
 import { useAnimationContext } from "./animation-context"
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel"
+import {
   SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiPostgresql,
   SiTailwindcss, SiDocker, SiFigma, SiGit, SiVercel, SiBootstrap,
-  SiFramer, SiThreedotjs, SiPrisma, SiJest, SiCypress,
-  SiGlobus,
-  SiApifox,
+  SiThreedotjs, SiPrisma, SiJest, SiCypress,
   SiBrevo,
   SiN8N,
   SiStripe,
   SiSupabase,
-  SiAndroid
+  SiAndroid,
+  SiExpress,
+  SiMysql,
+  SiMongodb,
+  SiPython,
 } from "react-icons/si"
 import { TbApi } from "react-icons/tb";
 import { Globe } from "lucide-react"
@@ -23,15 +30,42 @@ export function SkillsSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
   const t = useTranslations()
+  const carouselRef = useRef<any>(null)
+  const [isAutoplay, setIsAutoplay] = useState(true)
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"],
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], ["100px", "-100px"])
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
 
   const skills = t.skills.skillsList
   const stats = t.skills.stats
   const technologies = t.skills.technologies
 
+  // Auto-play infinito
+  useEffect(() => {
+    if (!isAutoplay || !carouselRef.current) return
+
+    const timer = setInterval(() => {
+      if (carouselRef.current.canScrollNext()) {
+        carouselRef.current.scrollNext()
+      } else {
+        carouselRef.current.scrollTo(0)
+      }
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [isAutoplay])
+
   // Mapeamento de tecnologias para ícones (react-icons simple icons)
   const techIcons: Record<string, any> = {
     'React': SiReact,
+    'React.js': SiReact,
     'Next.js': SiNextdotjs,
+    'Next.JS': SiNextdotjs,
     'TypeScript': SiTypescript,
     'Node.js': SiNodedotjs,
     'API REST': TbApi,
@@ -49,15 +83,49 @@ export function SkillsSection() {
     'Jest': SiJest,
     'Cypress': SiCypress,
     'Brevo': SiBrevo,
-    'Next.JS': SiNextdotjs,
+    'Brevo API': SiBrevo,
     'Stripe': SiStripe,
     'Supabase': SiSupabase,
     'React Native': SiReact,
     'Android Studio': SiAndroid,
+    'Express': SiExpress,
+    'MySQL': SiMysql,
+    'MongoDB': SiMongodb,
+    'Python': SiPython,
+    'Java': Globe,
+    'HTML': Globe,
+    'CSS': Globe,
+    'JavaScript': Globe,
+    'AppSheet': Globe,
+    'GitHub': SiGit,
+    'Agile': Globe,
+    'Scrum': Globe,
+    'Jira': Globe,
+    'UML': Globe,
+    'C': Globe,
+    'Game Design': Globe,
+    'Cloud Computing': Globe,
+    'Microservices': Globe,
+    'Kubernetes': SiDocker,
+    'OpenShift': Globe,
+    'NoSQL': SiMongodb,
+    'SQL': SiPostgresql,
+    'Inglês': Globe,
+    'Espanhol': Globe,
+    'Hospitalidade': Globe,
+    'Atendimento ao Cliente': Globe,
+    'Engenharia de Software': Globe,
+    'Arquitetura de Software': Globe,
+    'Transformação Digital': Globe,
+    'DevOps': SiDocker,
+    'Mercado Pago API': Globe,
+    'WhatsApp API': Globe,
+    'Coolify': SiDocker,
+    'CA Harvest SCM': SiGit,
   }
 
   return (
-    <section ref={containerRef} id="skills" className="relative py-32 md:py-48 overflow-hidden">
+    <section ref={containerRef} id="skills" className="relative py-20 md:py-32 overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
 
@@ -131,31 +199,64 @@ export function SkillsSection() {
           </div>
         </div>
 
-        {/* Technologies Grid */}
-        <div className="mt-24">
+        {/* Technologies Carousel */}
+        <motion.div 
+          initial={{ opacity: 0}}
+          whileInView={{ opacity: 1}}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-24"
+          style={{ y, opacity }}
+        >
           <h3 className="text-xl md:text-2xl font-semibold mb-12 text-center">{t.skills.description}</h3>
-          <div className="grid grid-cols-6 gap-4 md:gap-6">
-            {technologies.map((tech, i) => {
-              const IconComponent = techIcons[tech] || Globe
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  whileHover={{ scale: 1.15, y: -5 }}
-                  className="flex flex-col items-center justify-center p-4 md:p-6 rounded-lg bg-card border border-border hover:border-primary/50 transition-all group cursor-default"
-                >
-                  <IconComponent className="w-8 h-8 md:w-10 md:h-10 text-muted-foreground group-hover:text-primary transition-colors mb-2 md:mb-3" />
-                  <span className="text-xs md:text-sm text-center text-muted-foreground group-hover:text-foreground transition-colors font-medium line-clamp-2 w-full">
-                    {tech}
-                  </span>
-                </motion.div>
-              )
-            })}
+          
+          <div 
+            onMouseEnter={() => setIsAutoplay(false)}
+            onMouseLeave={() => setIsAutoplay(true)}
+            onTouchStart={() => setIsAutoplay(false)}
+            onTouchEnd={() => setIsAutoplay(true)}
+            className="cursor-grab active:cursor-grabbing overflow-visible"
+          >
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+                dragFree: true,
+              }}
+              setApi={(api) => {
+                carouselRef.current = api
+              }}
+              className="w-full overflow-visible"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4 overflow-visible">
+                {technologies.map((tech, i) => {
+                  const IconComponent = techIcons[tech] || Globe
+                  return (
+                    <CarouselItem key={i} className="pl-2 md:pl-4 basis-1/3 sm:basis-1/4 md:basis-1/5 lg:basis-1/6">
+                      <motion.div
+                        initial={{ opacity: 0.5, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        whileHover={{ scale: 1, y: 0 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                        className="flex flex-col items-center justify-center p-2.5 sm:p-4 md:p-6 rounded-lg bg-card border border-border hover:border-primary/50 transition-all group/tech h-full"
+                      >
+                        <IconComponent className="w-7 sm:w-8 md:w-10 h-7 sm:h-8 md:h-10 text-muted-foreground group-hover/tech:text-primary transition-colors mb-2 sm:mb-3" />
+                        <span className="text-[10px] sm:text-xs md:text-sm text-center text-muted-foreground group-hover/tech:text-foreground transition-colors font-medium line-clamp-2 w-full">
+                          {tech}
+                        </span>
+                      </motion.div>
+                    </CarouselItem>
+                  )
+                })}
+              </CarouselContent>
+            </Carousel>
           </div>
-        </div>
+
+          {/* Scroll Hint */}
+          <div className="text-center mt-6 text-xs text-muted-foreground">
+            Arraste para explorar mais →
+          </div>
+        </motion.div>
       </div>
     </section>
   )

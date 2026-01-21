@@ -35,8 +35,8 @@ export function AboutSection() {
         className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent"
       />
 
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-16 items-center">
+      <div className="container mx-auto px-3 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
           {/* Left - Image */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
@@ -84,14 +84,14 @@ export function AboutSection() {
           </motion.div>
 
           {/* Right - Content */}
-          <div ref={textRef} className="space-y-8">
+          <div ref={textRef} className="space-y-4 sm:space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8 }}
             >
               <span className="text-primary text-xs sm:text-sm font-medium tracking-widest uppercase">{t.about.title}</span>
-              <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold mt-4 text-balance leading-tight">
+              <h2 className="text-2xl sm:text-5xl md:text-6xl font-bold mt-2 sm:mt-4 text-balance leading-tight">
                 {t.about.heading.split(" ").slice(0, 1).join(" ")} <span className="text-gradient">{t.about.heading.split(" ").slice(1).join(" ")}</span>
               </h2>
             </motion.div>
@@ -100,7 +100,7 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed text-pretty"
+              className="text-xs sm:text-base md:text-lg text-muted-foreground leading-relaxed text-pretty"
             >
               {t.about.description}
             </motion.p>
@@ -109,7 +109,7 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed text-pretty"
+              className="text-xs sm:text-base md:text-lg text-muted-foreground leading-relaxed text-pretty"
             >
               {t.about.subheading.split('.')[0] + '.'}
               <span className="text-primary font-medium"> {t.about.subheading.split('.').slice(1).join('.')}</span>
@@ -120,7 +120,7 @@ export function AboutSection() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="grid grid-cols-3 gap-4 pt-8"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 pt-4 sm:pt-6"
             >
               {highlightIcons.map((item, i) => {
                 const highlightText = t.about.highlights[i]
@@ -128,11 +128,11 @@ export function AboutSection() {
                   <motion.div
                     key={i}
                     whileHover={{ y: -5, scale: 1.02 }}
-                    className="p-4 rounded-xl bg-card border border-border hover:border-primary/50 transition-colors group"
+                    className="p-2 sm:p-4 rounded-lg sm:rounded-xl bg-card border border-border hover:border-primary/50 transition-colors group"
                   >
-                    <item.icon className="w-8 h-8 text-primary mb-3 group-hover:scale-110 transition-transform" />
-                    <h3 className="font-semibold text-foreground">{highlightText.title}</h3>
-                    <p className="text-xs text-muted-foreground mt-1">{highlightText.description}</p>
+                    <item.icon className="w-6 sm:w-7 md:w-8 h-6 sm:h-7 md:h-8 text-primary mb-2 sm:mb-3 group-hover:scale-110 transition-transform" />
+                    <h3 className="font-semibold text-xs sm:text-sm md:text-base text-foreground line-clamp-1 break-words">{highlightText.title}</h3>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 line-clamp-2 break-words">{highlightText.description}</p>
                   </motion.div>
                 )
               })}

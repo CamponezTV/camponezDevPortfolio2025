@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { LanguageProvider, useLanguage } from '@/context/language-context'
 import React from 'react'
 
@@ -26,8 +27,7 @@ describe('Language Context', () => {
   })
 
   it('should update language state', async () => {
-    const user = require('@testing-library/user-event').default
-    const u = user.setup()
+    const u = userEvent.setup()
     
     render(
       <LanguageProvider>
@@ -45,8 +45,7 @@ describe('Language Context', () => {
   })
 
   it('should persist language to localStorage', async () => {
-    const user = require('@testing-library/user-event').default
-    const u = user.setup()
+    const u = userEvent.setup()
     
     render(
       <LanguageProvider>

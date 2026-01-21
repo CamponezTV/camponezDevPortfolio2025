@@ -192,7 +192,7 @@ export const translations = {
       technologies: [
         'React', 'Next.js', 'TypeScript', 'Node.js', 'API REST', 'TailwindCSS', 'Android Studio',
         'PostgreSQL','Docker', 'Figma', 'Git', 'CI/CD', 'Vercel', 'Bootstrap', 'React Native',
-        'N8N', 'Three.js', 'Prisma', 'Jest', 'Cypress', 'Next.JS', 'Stripe', 'Supabase',
+        'N8N', 'Three.js', 'Prisma', 'Jest', 'Cypress', 'Stripe', 'Supabase', 'Express',
       ],
     },
     // Projects Section
@@ -204,6 +204,19 @@ export const translations = {
       viewProject: 'Ver Projeto',
       code: 'Código',
       description: 'Confira alguns dos meus projetos em destaque',
+      modal: {
+        title: 'Projetos',
+        projects: 'Projetos',
+        challenge: 'Desafio',
+        solution: 'Solução',
+        results: 'Resultados',
+        timeline: 'Timeline',
+        team: 'Equipe',
+        learnings: 'Aprendizados',
+        techStack: 'Stack Técnico',
+        viewProject: 'Ver Projeto',
+        code: 'Código',
+      },
       disclaimer: {
         title: '📌 Nota Importante',
         intro: 'Alguns projetos não possuem repositórios públicos. Isso ocorre porque:',
@@ -220,7 +233,7 @@ export const translations = {
           tags: ['React.js', 'Mercado Pago API', 'Node.js/Express', 'TailwindCSS', 'Three.js', 'Brevo API'],
           details: {
             challenge: 'Criar uma plataforma de e-commerce de cripto moedas completa que integrasse sistema de pagamentos do Mercado Pago, automação de email e animações 3D atrativas.',
-            solution: 'Desenvolvemos uma arquitetura full-stack com React no frontend, Node.js/Express no backend, e integração com Mercado Pago API para pagamentos seguros.',
+            solution: 'Desenvolvi uma arquitetura full-stack com React no frontend, Node.js/Express no backend, e integração com Mercado Pago API para pagamentos seguros.',
             results: 'Plataforma robusta com alta taxa de conversão, reduzindo tempo de processamento de pagamentos em 60%.',
             timeline: '6 meses de desenvolvimento',
             team: 'Apenas formada por mim',
@@ -269,6 +282,34 @@ export const translations = {
             learnings: 'Expertise em Brevo API, segmentação de dados, e otimização de campanhas de email'
           }
         },
+        {
+          title: 'Portfolio 2024',
+          category: 'Full Stack & Design',
+          description: 'Portfólio pessoal com Next.js, animações Framer Motion, globo 3D interativo com Three.js, dark/light mode e i18n EN/PT.',
+          tags: ['Next.js 14', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Three.js', 'React Three Fiber', 'Vercel'],
+          details: {
+            challenge: 'Criar um portfólio visualmente atraente e funcional que demonstrasse habilidades em front-end, design responsivo e animações complexas, com suporte a múltiplos idiomas e temas.',
+            solution: 'Desenvolvido com Next.js 14, TypeScript, Tailwind CSS para styling, Framer Motion para animações sofisticadas, Three.js com React Three Fiber para globo 3D interativo, e sistema i18n customizado.',
+            results: 'Portfólio com animações fluidas, globo 3D interativo, dark/light mode funcional, suporte completo EN/PT, layout responsivo mobile-first, e performance otimizada. Gerou múltiplas oportunidades profissionais.',
+            timeline: '1 mês de desenvolvimento',
+            team: 'Desenvolvido por mim',
+            learnings: 'Proficiência em Framer Motion, Three.js e React Three Fiber para efeitos 3D, sistema de internacionalização customizado, temas dinâmicos com next-themes, e otimização de performance em Single Page Applications'
+          }
+        },
+        {
+          title: 'Portfolio 2026',
+          category: 'Design & Desenvolvimento',
+          description: 'Portfólio pessoal moderno com animações avançadas, parallax, carrossel interativo e responsividade completa.',
+          tags: ['Next.js', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Embla Carousel', 'Vercel'],
+          details: {
+            challenge: 'Criar um portfólio pessoal que destacasse habilidades em design e desenvolvimento, com animações fluidas, interatividade smooth e responsividade perfeita em todos os dispositivos.',
+            solution: 'Desenvolvi com Next.js 16, TypeScript para type safety, TailwindCSS para styling responsivo, Framer Motion para animações avançadas e Embla Carousel para carrossel interativo com auto-play.',
+            results: 'Portfólio com 100% de performance, animações suaves em todos os dispositivos, carrossel com 45+ tecnologias mapeadas, e conversão de visitantes em oportunidades profissionais.',
+            timeline:'3 semanas de desenvolvimento',
+            team: 'Apenas formada por mim',
+            learnings: 'Masterização em Framer Motion avançado, responsive design mobile-first, integração de carrossel infinito, parallax effects e i18n com português/inglês'
+          }
+        },
       ],
     },
     // Gallery Section
@@ -293,6 +334,10 @@ export const translations = {
       ctaTitle: 'Quer conhecer meu trabalho?',
       ctaDescription: 'Confira meus projetos no GitHub ou conecte comigo no LinkedIn.',
       scheduleCall: 'Agendar Reunião',
+      resume: {
+        label: 'Currículo',
+        value: 'Download CV',
+      },
       form: {
         name: 'Nome',
         email: 'Email',
@@ -524,7 +569,7 @@ export const translations = {
       technologies: [
         'React', 'Next.js', 'TypeScript', 'Node.js', 'API REST', 'TailwindCSS', 'Android Studio',
         'PostgreSQL','Docker', 'Figma', 'Git', 'CI/CD', 'Vercel', 'Bootstrap', 'React Native',
-        'N8N', 'Three.js', 'Prisma', 'Jest', 'Cypress', 'Next.JS', 'Stripe', 'Supabase',
+        'N8N', 'Three.js', 'Prisma', 'Jest', 'Cypress', 'Stripe', 'Supabase',
       ],
     },
     // Projects Section
@@ -536,6 +581,19 @@ export const translations = {
       viewProject: 'View Project',
       code: 'Code',
       description: 'Check out some of my featured projects',
+      modal: {
+        title: 'Projects',
+        projects: 'Projects',
+        challenge: 'Challenge',
+        solution: 'Solution',
+        results: 'Results',
+        timeline: 'Timeline',
+        team: 'Team',
+        learnings: 'Learnings',
+        techStack: 'Tech Stack',
+        viewProject: 'View Project',
+        code: 'Code',
+      },
       disclaimer: {
         title: '📌 Important Note',
         intro: 'Some projects do not have public repositories. This occurs because:',
@@ -601,6 +659,34 @@ export const translations = {
             learnings: 'Expertise in Brevo API, data segmentation, and email campaign optimization'
           }
         },
+        {
+          title: 'Portfolio 2024',
+          category: 'Full Stack & Design',
+          description: 'Personal portfolio with Next.js, Framer Motion animations, interactive 3D globe with Three.js, dark/light mode and EN/PT i18n.',
+          tags: ['Next.js 14', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Three.js', 'React Three Fiber', 'Vercel'],
+          details: {
+            challenge: 'Create a visually attractive and functional portfolio that demonstrated front-end skills, responsive design and complex animations, with support for multiple languages and themes.',
+            solution: 'Developed with Next.js 14, TypeScript, Tailwind CSS for styling, Framer Motion for sophisticated animations, Three.js with React Three Fiber for interactive 3D globe, and custom i18n system.',
+            results: 'Portfolio with smooth animations, interactive 3D globe, functional dark/light mode, full EN/PT support, mobile-first responsive layout, and optimized performance. Generated multiple professional opportunities.',
+            timeline: '1 month of development',
+            team: 'Developed by me',
+            learnings: 'Proficiency in Framer Motion, Three.js and React Three Fiber for 3D effects, custom internationalization system, dynamic themes with next-themes, and performance optimization in Single Page Applications'
+          }
+        },
+        {
+          title: 'Portfolio 2026',
+          category: 'Design & Development',
+          description: 'Modern personal portfolio with advanced animations, parallax, interactive carousel and complete responsiveness.',
+          tags: ['Next.js', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Embla Carousel', 'Vercel'],
+          details: {
+            challenge: 'Create a personal portfolio that showcased skills in design and development, with smooth animations, smooth interactivity and perfect responsiveness on all devices.',
+            solution: 'I developed with Next.js 16, TypeScript for type safety, TailwindCSS for responsive styling, Framer Motion for advanced animations and Embla Carousel for interactive carousel with auto-play.',
+            results: 'Portfolio with 100% performance, smooth animations on all devices, carousel with 45+ mapped technologies, and conversion of visitors into professional opportunities.',
+            timeline: '3 weeks of development',
+            team: 'Only formed by me',
+            learnings: 'Mastery in advanced Framer Motion, mobile-first responsive design, infinite carousel integration, parallax effects and i18n with Portuguese/English'
+          }
+        },
       ],
     },
     // Gallery Section
@@ -625,6 +711,10 @@ export const translations = {
       ctaTitle: 'Want to see my work?',
       ctaDescription: 'Check out my projects on GitHub or connect with me on LinkedIn.',
       scheduleCall: 'Schedule Meeting',
+      resume: {
+        label: 'Resume',
+        value: 'Download CV',
+      },
       form: {
         name: 'Name',
         email: 'Email',

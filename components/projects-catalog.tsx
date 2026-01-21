@@ -58,6 +58,8 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
       "/vendeai-logo.svg",
       "/banestes.png",
       "/novasyn.png",
+      "/portfolio_2024.png",
+      "/portfolio_2026.png",
     ][i],
     tags: item.tags,
     link: [
@@ -65,12 +67,16 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
       "https://novasyn.com.br/#portfolio",
       "https://www.banestesasset.com.br/",
       "https://novasyn.com.br",
+      "https://my-portfolio-six-kappa-14.vercel.app/",
+      "",
     ][i],
     github: [
       "",
       "",
       "",
       "https://github.com/CamponezTV/NovaSyn-LTDA",
+      "https://github.com/CamponezTV/my-portfolio",
+      "https://github.com/CamponezTV/camponezDevPortfolio2025",
     ][i],
     details: item.details,
   }))
@@ -88,6 +94,8 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
           "/vendeai-logo.svg",
           "/banestes.png",
           "/novasyn.png",
+          "/portfolio_2024.png",
+          "/portfolio_2026.png",
         ][i],
         tags: item.tags,
         link: [
@@ -95,12 +103,16 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
           "https://novasyn.com.br/#portfolio",
           "https://www.banestesasset.com.br/",
           "https://novasyn.com.br",
+          "https://my-portfolio-six-kappa-14.vercel.app/",
+          "",
         ][i],
         github: [
           "",
           "",
           "",
           "https://github.com/CamponezTV/NovaSyn-LTDA",
+          "https://github.com/CamponezTV/my-portfolio",
+          "https://github.com/CamponezTV/camponezDevPortfolio2025",
         ][i],
         details: item.details,
       }))
@@ -165,7 +177,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                   </motion.button>
                 )}
                 <h2 className="text-2xl font-bold text-foreground">
-                  {selectedProject ? selectedProject.title : "Projetos"}
+                  {selectedProject ? selectedProject.title : t.projects.modal.projects}
                 </h2>
               </div>
               <button
@@ -190,18 +202,20 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                     className="p-6 space-y-6"
                   >
                     {/* Image */}
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.1 }}
-                      className="aspect-video rounded-xl overflow-hidden bg-muted shadow-lg"
-                    >
-                      <img
-                        src={selectedProject.image}
-                        alt={selectedProject.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </motion.div>
+                    {selectedProject.image && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.1 }}
+                        className="aspect-video rounded-xl overflow-hidden bg-muted shadow-lg"
+                      >
+                        <img
+                          src={selectedProject.image}
+                          alt={selectedProject.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </motion.div>
+                    )}
 
                     {/* Info */}
                     <motion.div
@@ -234,7 +248,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         >
                           <Target size={24} className="text-red-500 flex-shrink-0 mt-1" />
                           <div className="flex-1">
-                            <h4 className="font-semibold text-foreground mb-2">Desafio</h4>
+                            <h4 className="font-semibold text-foreground mb-2">{t.projects.modal.challenge}</h4>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                               {selectedProject.details.challenge}
                             </p>
@@ -250,7 +264,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         >
                           <Lightbulb size={24} className="text-yellow-500 flex-shrink-0 mt-1" />
                           <div className="flex-1">
-                            <h4 className="font-semibold text-foreground mb-2">Solução</h4>
+                            <h4 className="font-semibold text-foreground mb-2">{t.projects.modal.solution}</h4>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                               {selectedProject.details.solution}
                             </p>
@@ -266,7 +280,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         >
                           <Zap size={24} className="text-blue-500 flex-shrink-0 mt-1" />
                           <div className="flex-1">
-                            <h4 className="font-semibold text-foreground mb-2">Resultados</h4>
+                            <h4 className="font-semibold text-foreground mb-2">{t.projects.modal.results}</h4>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                               {selectedProject.details.results}
                             </p>
@@ -282,7 +296,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         >
                           <Calendar size={24} className="text-green-500 flex-shrink-0 mt-1" />
                           <div className="flex-1">
-                            <h4 className="font-semibold text-foreground mb-2">Timeline</h4>
+                            <h4 className="font-semibold text-foreground mb-2">{t.projects.modal.timeline}</h4>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                               {selectedProject.details.timeline}
                             </p>
@@ -298,7 +312,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         >
                           <Users size={24} className="text-purple-500 flex-shrink-0 mt-1" />
                           <div className="flex-1">
-                            <h4 className="font-semibold text-foreground mb-2">Equipe</h4>
+                            <h4 className="font-semibold text-foreground mb-2">{t.projects.modal.team}</h4>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                               {selectedProject.details.team}
                             </p>
@@ -314,7 +328,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         >
                           <GraduationCap size={24} className="text-cyan-500 flex-shrink-0 mt-1" />
                           <div className="flex-1">
-                            <h4 className="font-semibold text-foreground mb-2">Aprendizados</h4>
+                            <h4 className="font-semibold text-foreground mb-2">{t.projects.modal.learnings}</h4>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                               {selectedProject.details.learnings}
                             </p>
@@ -330,7 +344,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                       transition={{ delay: 0.55 }}
                     >
                       <h3 className="text-sm font-semibold text-foreground mb-3">
-                        Stack Técnico
+                        {t.projects.modal.techStack}
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedProject.tags.map((tag, i) => (
@@ -362,7 +376,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                           className="flex-1 px-4 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium flex items-center justify-center gap-2 group"
                         >
                           <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform" />
-                          Ver Projeto
+                          {t.projects.modal.viewProject}
                         </a>
                       )}
                       {selectedProject.github && (
@@ -373,7 +387,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                           className="flex-1 px-4 py-3 rounded-lg border border-primary text-primary hover:bg-primary/10 transition-colors font-medium flex items-center justify-center gap-2 group"
                         >
                           <Github size={18} className="group-hover:scale-110 transition-transform" />
-                          Código
+                          {t.projects.modal.code}
                         </a>
                       )}
                     </motion.div>
@@ -398,11 +412,13 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         className="text-left group"
                       >
                         <div className="relative aspect-video rounded-lg overflow-hidden bg-muted mb-3">
-                          <img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                          />
+                          {project.image && (
+                            <img
+                              src={project.image}
+                              alt={project.title}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            />
+                          )}
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />
                         </div>
                         <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
