@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useMemo } from "react"
 import { motion, useScroll } from "framer-motion"
 import { ArrowUpRight, Github, ExternalLink } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
@@ -29,37 +29,16 @@ export function ProjectsSection() {
     offset: ["start end", "end start"],
   })
 
-  const projects = t.projects.items.map((item, i) => ({
+  const projects = useMemo(() => t.projects.items.map((item, i) => ({
     id: i + 1,
     title: item.title,
     category: item.category,
     description: item.description,
-    image: [
-      "/Xmetal.png",
-      "/vendeai-logo.svg",
-      "/banestes.png",
-      "/novasyn.png",
-      "/portfolio-2024.png",
-      "",
-    ][i],
+    image: item.image,
     tags: item.tags,
-    link: [
-      "https://xmetal.novasyn.com.br/",
-      "https://novasyn.com.br/#portfolio",
-      "https://www.banestesasset.com.br/",
-      "https://novasyn.com.br",
-      "https://my-portfolio-six-kappa-14.vercel.app/",
-      "",
-    ][i],
-    github: [
-      "",
-      "",
-      "",
-      "https://github.com/CamponezTV/NovaSyn-LTDA",
-      "https://github.com/CamponezTV/my-portfolio",
-      "https://github.com/CamponezTV/camponezDevPortfolio2025",
-    ][i],
-  }))
+    link: item.link,
+    github: item.github,
+  })), [t.projects.items])
 
   return (
     <section ref={containerRef} id="projects" className="relative py-32 md:py-48 bg-card/50">

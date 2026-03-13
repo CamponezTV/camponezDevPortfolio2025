@@ -52,7 +52,7 @@ export const translations = {
               id: 1,
               title: 'Novasyn LTDA',
               period: 'Nov 2025 - Presente',
-              role: 'Founder & Desenvolvedor Frontend/Full Stack',
+              role: 'Fundador & Diretor de Tecnologia',
               logo: '/logo_1.png',
               description: 'Desenvolvimento de soluções web completas e automação de sistemas com IA, com foco em performance e experiência do usuário.',
               achievements: [
@@ -227,38 +227,47 @@ export const translations = {
       },
       items: [
         {
-          title: 'Xmetal Token',
+          title: 'O Incidente WebSite',
           category: 'Desenvolvimento Web',
-          description: 'Plataforma de e-commerce de cripto moedas Completa com integração de pagamentos do mercado pago.',
-          tags: ['React.js', 'Mercado Pago API', 'Node.js/Express', 'TailwindCSS', 'Three.js', 'Brevo API'],
+          description: 'Website oficial do grupo de influenciadores O Incidente.',
+          image: '/incidente.png',
+          tags: ['React.Js', 'Docker', 'TailwindCSS', 'Three.js', 'Twitch/Yotube API', 'Coolify'],
+          link: 'https://incidente.gg/',
+          github: '',
           details: {
-            challenge: 'Criar uma plataforma de e-commerce de cripto moedas completa que integrasse sistema de pagamentos do Mercado Pago, automação de email e animações 3D atrativas.',
-            solution: 'Desenvolvi uma arquitetura full-stack com React no frontend, Node.js/Express no backend, e integração com Mercado Pago API para pagamentos seguros.',
-            results: 'Plataforma robusta com alta taxa de conversão, reduzindo tempo de processamento de pagamentos em 60%.',
-            timeline: '6 meses de desenvolvimento',
-            team: 'Apenas formada por mim',
-            learnings: 'Experiência profunda em integração de APIs de pagamento, otimização de performance com Three.js e boas práticas de segurança'
+            challenge: 'Criar uma plataforma institucional para o grupo de influenciadores O Incidente, com foco em performance, segurança e confiabilidade e design criativo.',
+            solution: 'Desenvolvemos uma arquitetura Front-end focada principalmente em performance, segurança e confiabilidade, Integrado a APIs externas como Youtube e Twitch, além de animações 3D feitas com Three.js e integração de diversas camadas de segurança como o cloudflare para evitar ataques no site.',
+            results: 'Plataforma Institucional robusta feita para o grupo O Incidente. O site conta com integração com as APIs do Youtube e Twitch, além de animações 3D feitas com Three.js e boas integraçoes e práticas de segurança.',
+            timeline: '1 mes de desenvolvimento',
+            team: 'NOVAsyn LTDA',
+            learnings: 'Experiência profunda em integração de APIs do youtube e twitch, otimização de performance com Three.js e boas práticas de segurança e integração do Cloudflare, deploy e CI/CD com Coolify com Docker e Nginx.'
           }
         },
         {
           title: 'Vende.AI',
           category: 'IA & Automação',
           description: 'Plataforma de automação de vendas no WhatsApp com IA',
+          image: '/vendeai-logo.svg',
           tags: ['Python', 'N8N', 'Whatsapp API', 'Coolify'],
+          link: 'https://novasyn.com.br/#portfolio',
+          github: '',
           details: {
             challenge: 'Automatizar todo o fluxo de vendas via WhatsApp utilizando IA para responder clientes de forma inteligente e personalizada.',
-            solution: 'Criamos fluxos complexos com N8N, integrada com IA e WhatsApp API, permitindo respostas automáticas contextualizadas e qualificadas.',
+            solution: 'Criamos fluxos complexos com N8N, integrada with IA e WhatsApp API, permitindo respostas automáticas contextualizadas e qualificadas.',
             results: 'Aumento de 80% na capacidade de resposta, redução de 90% no tempo de atendimento e aumento de 45% nas vendas.',
             timeline: '4 meses de desenvolvimento até o momento',
-            team: 'Equipe especializada em automação e IA com 2 engenheiros de software',
-            learnings: 'Experiência em N8N avançado, integração com APIs de IA, arquitetura de fluxos de automação complexos'
+            team: 'Equipe especializada em automação and IA with 2 engenheiros de software',
+            learnings: 'Experiência em N8N avançado, integração with APIs de IA, arquitetura de fluxos de automação complexos'
           }
         },
         {
           title: 'Banestes Asset',
           category: 'Desenvolvimento Web',
           description: 'Nova Plataforma Institucional para a Banestes Asset',
+          image: '/banestes.png',
           tags: ['Bootstrap', 'Node.js', 'CA Harvest SCM'],
+          link: 'https://www.banestesasset.com.br/',
+          github: '',
           details: {
             challenge: 'Modernizar plataforma legada do setor financeiro com interface responsiva mantendo compatibilidade com sistemas legados.',
             solution: 'Implementamos Bootstrap para front-end responsivo, Node.js no backend e integração com CA Harvest SCM para gerenciamento de versões.',
@@ -272,7 +281,10 @@ export const translations = {
           title: 'Novasyn LTDA',
           category: 'Desenvolvimento Web',
           description: 'Plataforma Institucional Completa com integração de email.',
+          image: '/novasynn.png',
           tags: ['React.js', 'Brevo API', 'TailwindCSS', 'Coolify'],
+          link: 'https://novasyn.com.br',
+          github: 'https://github.com/CamponezTV/NovaSyn-LTDA',
           details: {
             challenge: 'Criar plataforma institucional com sistema de email marketing integrado para gerenciar campanhas e contatos.',
             solution: 'Desenvolvemos aplicativo React com TailwindCSS e integração Brevo API para automação de email marketing.',
@@ -286,10 +298,13 @@ export const translations = {
           title: 'Portfolio 2024',
           category: 'Full Stack & Design',
           description: 'Portfólio pessoal com Next.js, animações Framer Motion, globo 3D interativo com Three.js, dark/light mode e i18n EN/PT.',
+          image: '/portfolio_2024.png',
           tags: ['Next.js 14', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Three.js', 'React Three Fiber', 'Vercel'],
+          link: 'https://my-portfolio-six-kappa-14.vercel.app/',
+          github: 'https://github.com/CamponezTV/my-portfolio',
           details: {
             challenge: 'Criar um portfólio visualmente atraente e funcional que demonstrasse habilidades em front-end, design responsivo e animações complexas, com suporte a múltiplos idiomas e temas.',
-            solution: 'Desenvolvido com Next.js 14, TypeScript, Tailwind CSS para styling, Framer Motion para animações sofisticadas, Three.js com React Three Fiber para globo 3D interativo, e sistema i18n customizado.',
+            solution: 'Desenvolvido com Next.js 14, TypeScript, Tailwind CSS para styling, Framer Motion para animações sofisticadas, Three.js with React Three Fiber para globo 3D interativo, e sistema i18n customizado.',
             results: 'Portfólio com animações fluidas, globo 3D interativo, dark/light mode funcional, suporte completo EN/PT, layout responsivo mobile-first, e performance otimizada. Gerou múltiplas oportunidades profissionais.',
             timeline: '1 mês de desenvolvimento',
             team: 'Desenvolvido por mim',
@@ -300,7 +315,10 @@ export const translations = {
           title: 'Portfolio 2026',
           category: 'Design & Desenvolvimento',
           description: 'Portfólio pessoal moderno com animações avançadas, parallax, carrossel interativo e responsividade completa.',
+          image: '/portfolio_2026.png',
           tags: ['Next.js', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Embla Carousel', 'Vercel'],
+          link: '',
+          github: 'https://github.com/CamponezTV/camponezDevPortfolio2025',
           details: {
             challenge: 'Criar um portfólio pessoal que destacasse habilidades em design e desenvolvimento, com animações fluidas, interatividade smooth e responsividade perfeita em todos os dispositivos.',
             solution: 'Desenvolvi com Next.js 16, TypeScript para type safety, TailwindCSS para styling responsivo, Framer Motion para animações avançadas e Embla Carousel para carrossel interativo com auto-play.',
@@ -429,7 +447,7 @@ export const translations = {
               id: 1,
               title: 'Novasyn LTDA',
               period: 'Nov 2025 - Present',
-              role: 'Founder & Frontend/Full Stack Developer',
+              role: 'Founder & CTO',
               logo: '/logo_1.png',
               description: 'Development of complete web solutions and AI system automation with focus on performance and user experience.',
               achievements: [
@@ -604,24 +622,30 @@ export const translations = {
       },
       items: [
         {
-          title: 'Xmetal Token',
+          title: 'O Incidente WebSite',
           category: 'Web Development',
-          description: 'Complete Crypto E-commerce Platform with payment integration.',
-          tags: ['React.js', 'Mercado Pago API', 'Node.js/Express', 'TailwindCSS', 'Three.js', 'Brevo API'],
+          description: 'Official website of the influencer group O Incidente.',
+          image: '/incidente.png',
+          tags: ['React.js', 'Docker', 'TailwindCSS', 'Three.js', 'Twitch/YouTube API', 'Coolify'],
+          link: 'https://incidente.gg/',
+          github: '',
           details: {
-            challenge: 'Create a modern institutional platform that integrates payment systems, email automation and attractive 3D animations.',
-            solution: 'We developed a full-stack architecture with React frontend, Node.js/Express backend, and integration with Mercado Pago API for secure payments.',
-            results: 'Robust platform with high conversion rate, reducing payment processing time by 60%.',
-            timeline: '6 months of development',
-            team: 'Only formed by me',
-            learnings: 'Deep experience with payment API integration, Three.js performance optimization and security best practices'
+            challenge: 'Create an institutional platform for the influencer group O Incidente, focusing on performance, security, reliability, and creative design.',
+            solution: 'We developed a Frontend architecture focused primarily on performance, security, and reliability, integrated with external APIs like YouTube and Twitch, plus 3D animations made with Three.js and integration of various security layers like Cloudflare to prevent attacks on the site.',
+            results: 'Robust institutional platform made for the O Incidente group. The site features integration with YouTube and Twitch APIs, plus 3D animations made with Three.js and good security practices and integrations.',
+            timeline: '1 month of development',
+            team: 'NOVAsyn LTDA',
+            learnings: 'Deep experience in YouTube and Twitch API integration, performance optimization with Three.js, and good security practices and Cloudflare integration, deployment and CI/CD with Coolify using Docker and Nginx.'
           }
         },
         {
           title: 'Vende.AI',
           category: 'AI & Automation',
           description: 'WhatsApp sales automation platform with AI',
+          image: '/vendeai-logo.svg',
           tags: ['Python', 'N8N', 'Whatsapp API', 'Coolify'],
+          link: 'https://novasyn.com.br/#portfolio',
+          github: '',
           details: {
             challenge: 'Automate the entire sales flow via WhatsApp using AI to respond to customers intelligently and personalized.',
             solution: 'We created complex workflows with N8N, integrated with AI and WhatsApp API, enabling contextualized and qualified automatic responses.',
@@ -635,7 +659,10 @@ export const translations = {
           title: 'Banestes Asset',
           category: 'Web Development',
           description: 'New Institutional Platform for Banestes Asset',
+          image: '/banestes.png',
           tags: ['Bootstrap', 'Node.js', 'CA Harvest SCM'],
+          link: 'https://www.banestesasset.com.br/',
+          github: '',
           details: {
             challenge: 'Modernize a legacy financial sector platform with responsive interface while maintaining compatibility with legacy systems.',
             solution: 'We implemented Bootstrap for responsive front-end, Node.js backend and integration with CA Harvest SCM for version management.',
@@ -649,7 +676,10 @@ export const translations = {
           title: 'Novasyn LTDA',
           category: 'Web Development',
           description: 'Complete Institutional Platform with email integration.',
+          image: '/novasynn.png',
           tags: ['React.js', 'Brevo API', 'TailwindCSS', 'Coolify'],
+          link: 'https://novasyn.com.br',
+          github: 'https://github.com/CamponezTV/NovaSyn-LTDA',
           details: {
             challenge: 'Create an institutional platform with integrated email marketing system to manage campaigns and contacts.',
             solution: 'We developed React application with TailwindCSS and Brevo API integration for email marketing automation.',
@@ -663,7 +693,10 @@ export const translations = {
           title: 'Portfolio 2024',
           category: 'Full Stack & Design',
           description: 'Personal portfolio with Next.js, Framer Motion animations, interactive 3D globe with Three.js, dark/light mode and EN/PT i18n.',
+          image: '/portfolio-2024.png',
           tags: ['Next.js 14', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Three.js', 'React Three Fiber', 'Vercel'],
+          link: 'https://my-portfolio-six-kappa-14.vercel.app/',
+          github: 'https://github.com/CamponezTV/my-portfolio',
           details: {
             challenge: 'Create a visually attractive and functional portfolio that demonstrated front-end skills, responsive design and complex animations, with support for multiple languages and themes.',
             solution: 'Developed with Next.js 14, TypeScript, Tailwind CSS for styling, Framer Motion for sophisticated animations, Three.js with React Three Fiber for interactive 3D globe, and custom i18n system.',
@@ -677,7 +710,10 @@ export const translations = {
           title: 'Portfolio 2026',
           category: 'Design & Development',
           description: 'Modern personal portfolio with advanced animations, parallax, interactive carousel and complete responsiveness.',
+          image: '',
           tags: ['Next.js', 'TypeScript', 'TailwindCSS', 'Framer Motion', 'Embla Carousel', 'Vercel'],
+          link: '',
+          github: 'https://github.com/CamponezTV/camponezDevPortfolio2025',
           details: {
             challenge: 'Create a personal portfolio that showcased skills in design and development, with smooth animations, smooth interactivity and perfect responsiveness on all devices.',
             solution: 'I developed with Next.js 16, TypeScript for type safety, TailwindCSS for responsive styling, Framer Motion for advanced animations and Embla Carousel for interactive carousel with auto-play.',

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, ArrowLeft, Github, ExternalLink, Target, Lightbulb, Zap, Users, Calendar, GraduationCap } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
@@ -48,80 +48,26 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
     }
   }, [isOpen])
 
-  const projects = t.projects.items.map((item: any, i: number) => ({
+  const projects = useMemo(() => t.projects.items.map((item: any, i: number) => ({
     id: i + 1,
     title: item.title,
     category: item.category,
     description: item.description,
-    image: [
-      "/Xmetal.png",
-      "/vendeai-logo.svg",
-      "/banestes.png",
-      "/novasyn.png",
-      "/portfolio_2024.png",
-      "/portfolio_2026.png",
-    ][i],
+    image: item.image,
     tags: item.tags,
-    link: [
-      "https://xmetal.novasyn.com.br/",
-      "https://novasyn.com.br/#portfolio",
-      "https://www.banestesasset.com.br/",
-      "https://novasyn.com.br",
-      "https://my-portfolio-six-kappa-14.vercel.app/",
-      "",
-    ][i],
-    github: [
-      "",
-      "",
-      "",
-      "https://github.com/CamponezTV/NovaSyn-LTDA",
-      "https://github.com/CamponezTV/my-portfolio",
-      "https://github.com/CamponezTV/camponezDevPortfolio2025",
-    ][i],
+    link: item.link,
+    github: item.github,
     details: item.details,
-  }))
+  })), [t.projects.items])
 
-  // Initialize selected project when modal opens with selectedProjectId
   useEffect(() => {
     if (isOpen && selectedProjectId) {
-      const projectsArray = t.projects.items.map((item: any, i: number) => ({
-        id: i + 1,
-        title: item.title,
-        category: item.category,
-        description: item.description,
-        image: [
-          "/Xmetal.png",
-          "/vendeai-logo.svg",
-          "/banestes.png",
-          "/novasyn.png",
-          "/portfolio_2024.png",
-          "/portfolio_2026.png",
-        ][i],
-        tags: item.tags,
-        link: [
-          "https://xmetal.novasyn.com.br/",
-          "https://novasyn.com.br/#portfolio",
-          "https://www.banestesasset.com.br/",
-          "https://novasyn.com.br",
-          "https://my-portfolio-six-kappa-14.vercel.app/",
-          "",
-        ][i],
-        github: [
-          "",
-          "",
-          "",
-          "https://github.com/CamponezTV/NovaSyn-LTDA",
-          "https://github.com/CamponezTV/my-portfolio",
-          "https://github.com/CamponezTV/camponezDevPortfolio2025",
-        ][i],
-        details: item.details,
-      }))
-      const project = projectsArray.find(p => p.id === selectedProjectId)
+      const project = projects.find(p => p.id === selectedProjectId)
       if (project) {
         setSelectedProject(project)
       }
     }
-  }, [isOpen, selectedProjectId])
+  }, [isOpen, selectedProjectId, projects])
 
   const handleBack = () => {
     setSelectedProject(null)

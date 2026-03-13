@@ -41,6 +41,7 @@ export default function RootLayout({
         style={{
           scrollBehavior: 'smooth',
         } as React.CSSProperties}
+        suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <AnimationProvider>

@@ -54,7 +54,7 @@ describe('ProjectsSection Component', () => {
       '/Xmetal.png',
       '/vendeai-logo.svg',
       '/banestes.png',
-      '/novasyn.png',
+      '/novasynn.png',
       '/portfolio-2024.png',
       '',
     ]
@@ -139,7 +139,7 @@ describe('ProjectsCatalog Component', () => {
       '/Xmetal.png',
       '/vendeai-logo.svg',
       '/banestes.png',
-      '/novasyn.png',
+      '/novasynn.png',
       '/portfolio-2024.png',
       '',
     ]
@@ -149,7 +149,7 @@ describe('ProjectsCatalog Component', () => {
       '/Xmetal.png',
       '/vendeai-logo.svg',
       '/banestes.png',
-      '/novasyn.png',
+      '/novasynn.png',
       '/portfolio-2024.png',
       '',
     ]
