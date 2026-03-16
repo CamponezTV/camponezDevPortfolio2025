@@ -19,7 +19,6 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Camponez DEV",
   description: "Site oficial de Arthur Camponez Marinho - Desenvolvedor, Criador & Inovador",
-  generator: "v0.app",
   icons: {
     icon: "/logo.png",
   },
