@@ -1,13 +1,7 @@
-/**
- * Security Configuration
- * Centralized security settings for the application
- */
-
 export const securityConfig = {
-  // Content Security Policy
   csp: {
     'default-src': ["'self'"],
-    'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Unsafe needed for Framer Motion
+    'script-src': ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // 'unsafe-eval' is required by Framer Motion
     'style-src': ["'self'", "'unsafe-inline'"],
     'img-src': ["'self'", 'data:', 'https:'],
     'font-src': ["'self'", 'data:'],
@@ -17,7 +11,6 @@ export const securityConfig = {
     'form-action': ["'self'"],
   },
 
-  // Security Headers
   headers: {
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
@@ -27,26 +20,21 @@ export const securityConfig = {
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
   },
 
-  // Rate Limiting
   rateLimit: {
-    // API routes
     api: {
       maxRequests: 100,
-      windowMs: 15 * 60 * 1000, // 15 minutes
+      windowMs: 15 * 60 * 1000,
     },
-    // Contact form
     contact: {
       maxRequests: 5,
-      windowMs: 60 * 60 * 1000, // 1 hour
+      windowMs: 60 * 60 * 1000,
     },
-    // Email sending
     email: {
       maxRequests: 3,
-      windowMs: 60 * 60 * 1000, // 1 hour
+      windowMs: 60 * 60 * 1000,
     },
   },
 
-  // CORS Configuration
   cors: {
     allowedOrigins: [
       'http://localhost:3000',
@@ -56,10 +44,9 @@ export const securityConfig = {
     allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-    maxAge: 86400, // 24 hours
+    maxAge: 86400,
   },
 
-  // Form Validation
   validation: {
     email: {
       minLength: 5,
@@ -75,13 +62,11 @@ export const securityConfig = {
     },
   },
 
-  // Request Limits
   requestLimits: {
     bodySize: '1mb',
     querySize: '2mb',
   },
 
-  // Security Features
   features: {
     enableCSRF: true,
     enableRateLimit: true,
@@ -90,26 +75,4 @@ export const securityConfig = {
     enableSecurityHeaders: true,
     enableHSTS: true,
   },
-}
-
-// Construct CSP header value
-export function constructCSPHeader(): string {
-  return Object.entries(securityConfig.csp)
-    .map(([key, values]) => `${key} ${values.join(' ')}`)
-    .join('; ')
-}
-
-// Validate configuration
-export function validateSecurityConfig(): void {
-  const requiredHeaders = ['X-Content-Type-Options', 'X-Frame-Options', 'Referrer-Policy']
-
-  for (const header of requiredHeaders) {
-    if (!securityConfig.headers[header as keyof typeof securityConfig.headers]) {
-      console.warn(`Missing security header: ${header}`)
-    }
-  }
-
-  if (securityConfig.features.enableRateLimit && !securityConfig.rateLimit) {
-    throw new Error('Rate limiting enabled but configuration missing')
-  }
 }

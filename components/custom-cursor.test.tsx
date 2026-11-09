@@ -2,7 +2,6 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { CustomCursor } from '@/components/custom-cursor'
 
-// Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
@@ -19,7 +18,6 @@ describe('CustomCursor Component', () => {
   it('should render two cursor elements on desktop', () => {
     const { container } = render(<CustomCursor />)
     const divs = container.querySelectorAll('div')
-    // Should have divs for main cursor and outer ring
     expect(divs.length).toBeGreaterThan(0)
   })
 
@@ -34,7 +32,6 @@ describe('CustomCursor Component', () => {
   it('should hide cursor on mobile devices', () => {
     const { container } = render(<CustomCursor />)
     const elements = container.querySelectorAll('.hidden.md\\:block')
-    // Mobile breakpoint hidden elements
     expect(elements.length).toBeGreaterThanOrEqual(0)
   })
 

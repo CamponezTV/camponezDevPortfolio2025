@@ -36,7 +36,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
   const t = useTranslations()
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
 
-  // Lock scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -82,7 +81,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop with blur */}
           <motion.div
             initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
             animate={{ opacity: 1, backdropFilter: "blur(10px)" }}
@@ -92,7 +90,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
             className="fixed inset-0 bg-black/40 z-40"
           />
 
-          {/* Modal */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -109,7 +106,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
               onClick={(e) => e.stopPropagation()}
               className="bg-card border border-border rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
             >
-            {/* Header */}
             <div className="sticky top-0 bg-gradient-to-b from-card to-card/50 p-6 border-b border-border flex items-center justify-between z-10">
               <div className="flex items-center gap-3">
                 {selectedProject && (
@@ -134,11 +130,9 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
               </button>
             </div>
 
-            {/* Content */}
             <div className="flex-1 overflow-y-auto">
               <AnimatePresence mode="wait">
                 {selectedProject ? (
-                  // Project Details View
                   <motion.div
                     key="details"
                     initial={{ opacity: 0, x: 100 }}
@@ -147,7 +141,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                     transition={{ duration: 0.3 }}
                     className="p-6 space-y-6"
                   >
-                    {/* Image */}
                     {selectedProject.image && (
                       <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -163,7 +156,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                       </motion.div>
                     )}
 
-                    {/* Info */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -177,7 +169,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                       </p>
                     </motion.div>
 
-                    {/* Detailed Information */}
                     {selectedProject.details && (
                       <motion.div
                         initial={{ opacity: 0 }}
@@ -185,7 +176,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         transition={{ delay: 0.2 }}
                         className="space-y-4 bg-muted/50 rounded-xl p-6 border border-border"
                       >
-                        {/* Challenge */}
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -201,7 +191,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                           </div>
                         </motion.div>
 
-                        {/* Solution */}
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -217,7 +206,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                           </div>
                         </motion.div>
 
-                        {/* Results */}
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -233,7 +221,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                           </div>
                         </motion.div>
 
-                        {/* Timeline */}
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -249,7 +236,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                           </div>
                         </motion.div>
 
-                        {/* Team */}
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -265,7 +251,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                           </div>
                         </motion.div>
 
-                        {/* Learnings */}
                         <motion.div
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -283,7 +268,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                       </motion.div>
                     )}
 
-                    {/* Tags */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -307,7 +291,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                       </div>
                     </motion.div>
 
-                    {/* Links */}
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -339,7 +322,6 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                     </motion.div>
                   </motion.div>
                 ) : (
-                  // Projects List View
                   <motion.div
                     key="list"
                     initial={{ opacity: 0, x: -100 }}

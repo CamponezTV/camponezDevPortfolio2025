@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from 'react'
 
-/**
- * Hook para detectar performance reduzida
- * Retorna true se o navegador tem performance baixa (ex: Firefox em máquinas lentas)
- */
+const LOW_MEMORY_GB = 4
+
+interface NavigatorWithDeviceMemory extends Navigator {
+  deviceMemory?: number
+}
+
 export function useReducedMotion() {
   const [reducedMotion, setReducedMotion] = useState(false)
 
   useEffect(() => {
-    // Check system preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     
     if (mediaQuery.matches) {
@@ -18,9 +19,8 @@ export function useReducedMotion() {
       return
     }
 
-    // Check for low-end devices (optional)
-    // You can add more checks here based on your needs
-    if ((navigator as any).deviceMemory && (navigator as any).deviceMemory < 4) {
+    const { deviceMemory } = navigator as NavigatorWithDeviceMemory
+    if (deviceMemory && deviceMemory < LOW_MEMORY_GB) {
       setReducedMotion(true)
       return
     }
@@ -39,9 +39,6 @@ export function useReducedMotion() {
   return reducedMotion
 }
 
-/**
- * Hook para detectar se está em device mobile/tablet
- */
 export function useIsSmallDevice() {
   const [isSmall, setIsSmall] = useState(false)
 

@@ -1,13 +1,7 @@
-/**
- * Configuração de idiomas (i18n)
- * Suporta Português (pt) e Inglês (en)
- */
-
 export type Language = 'pt' | 'en'
 
 export const translations = {
   pt: {
-    // Navigation
     nav: {
       home: 'Início',
       about: 'Sobre',
@@ -15,14 +9,12 @@ export const translations = {
       projects: 'Projetos',
       contact: 'Contato',
     },
-    // Hero Section
     hero: {
       description: 'Construindo meu próprio caminho com a minha paixão.',
       passion: 'Aficionado por tecnologia e por conhecimento inovativo.',
       scroll: 'Scroll',
       since: 'Desde 2021 • Brasil',
     },
-    // About Section
     about: {
       title: 'Sobre mim',
       description:
@@ -165,7 +157,6 @@ export const translations = {
         }
       }
     },
-    // Skills Section
     skills: {
       title: 'Habilidades',
       heading: 'Minhas Competências',
@@ -195,7 +186,6 @@ export const translations = {
         'N8N', 'Three.js', 'Prisma', 'Jest', 'Cypress', 'Stripe', 'Supabase', 'Express',
       ],
     },
-    // Projects Section
     projects: {
       title: 'Projetos',
       heading: 'Projetos Selecionados',
@@ -330,7 +320,6 @@ export const translations = {
         },
       ],
     },
-    // Gallery Section
     gallery: {
       title: 'Galeria',
       heading: 'Momentos Capturados',
@@ -344,7 +333,6 @@ export const translations = {
         { alt: 'Participando de um dos maiores eventos de tecnologia do Espírito Santo', location: 'ESX 2025 • Vitória, Espírito Santo' },
       ],
     },
-    // Contact Section
     contact: {
       title: 'Entre em Contato',
       heading: 'Vamos Conversar',
@@ -375,7 +363,6 @@ export const translations = {
         { label: 'Localização', value: 'Espírito Santo, Brasil' },
       ],
     },
-    // Footer
     footer: {
       brand: 'Arthur Camponez',
       description: 'Desenvolvedor Full Stack apaixonado por criar experiências web extraordinárias.',
@@ -384,12 +371,10 @@ export const translations = {
       rights: 'Todos os direitos reservados.',
       madeSince: 'Feito em 2026',
     },
-    // Loading Screen
     loading: {
       title: 'Carregando...',
       message: 'Preparando experiência incrível',
     },
-    // Common
     common: {
       home: 'Início',
       about: 'Sobre',
@@ -402,7 +387,6 @@ export const translations = {
     },
   },
   en: {
-    // Navigation
     nav: {
       home: 'Home',
       about: 'About',
@@ -410,14 +394,12 @@ export const translations = {
       projects: 'Projects',
       contact: 'Contact',
     },
-    // Hero Section
     hero: {
       description: 'Building my own path with my passion.',
       passion: 'Tech enthusiast and innovative knowledge seeker.',
       scroll: 'Scroll',
       since: 'Since 2021 • Brazil',
     },
-    // About Section
     about: {
       title: 'About Me',
       description:
@@ -560,7 +542,6 @@ export const translations = {
         }
       }
     },
-    // Skills Section
     skills: {
       title: 'Skills',
       heading: 'My Competencies',
@@ -590,7 +571,6 @@ export const translations = {
         'N8N', 'Three.js', 'Prisma', 'Jest', 'Cypress', 'Stripe', 'Supabase',
       ],
     },
-    // Projects Section
     projects: {
       title: 'Projects',
       heading: 'Featured Projects',
@@ -725,7 +705,6 @@ export const translations = {
         },
       ],
     },
-    // Gallery Section
     gallery: {
       title: 'Gallery',
       heading: 'Captured Moments',
@@ -739,7 +718,6 @@ export const translations = {
         { alt: 'Participating in one of the largest technology events in Espírito Santo', location: 'ESX 2025 • Espírito Santo' },
       ],
     },
-    // Contact Section
     contact: {
       title: 'Get In Touch',
       heading: "Let's Talk",
@@ -770,7 +748,6 @@ export const translations = {
         { label: 'Location', value: 'Espirito Santo, Brazil' },
       ],
     },
-    // Footer
     footer: {
       brand: 'Arthur Camponez',
       description: 'Full Stack Developer passionate about creating extraordinary web experiences.',
@@ -779,12 +756,10 @@ export const translations = {
       rights: 'All rights reserved.',
       madeSince: 'Made in 2026',
     },
-    // Loading Screen
     loading: {
       title: 'Loading...',
       message: 'Preparing an incredible experience',
     },
-    // Common
     common: {
       home: 'Home',
       about: 'About',
@@ -798,19 +773,10 @@ export const translations = {
   },
 } as const
 
-/**
- * Hook personalizado para usar traduções
- * @param language - Idioma atual ('pt' ou 'en')
- * @returns Objeto com todas as traduções do idioma selecionado
- */
 export function getTranslations(language: Language) {
   return translations[language]
 }
 
-/**
- * Detecta o idioma do navegador
- * @returns 'pt' se o navegador usar português, caso contrário 'en'
- */
 export function detectBrowserLanguage(): Language {
   if (typeof navigator === 'undefined') return 'pt'
   

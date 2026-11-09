@@ -15,7 +15,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Detecta idioma do navegador ou recupera do localStorage
     const savedLanguage = localStorage.getItem('language') as Language | null
     const detectedLanguage = savedLanguage || detectBrowserLanguage()
     

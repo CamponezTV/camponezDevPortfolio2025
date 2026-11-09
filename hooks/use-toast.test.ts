@@ -55,7 +55,6 @@ describe('useToast hook', () => {
       result.current.dismiss(toastId)
     })
 
-    // After dismiss, the toast should be marked as open: false
     const dismissedToast = result.current.toasts.find((t) => t.id === toastId)
     expect(dismissedToast?.open).toBe(false)
   })
@@ -74,7 +73,6 @@ describe('useToast hook', () => {
       result.current.dismiss()
     })
 
-    // All toasts should be marked as open: false
     const openToasts = result.current.toasts.filter((t) => t.open)
     expect(openToasts.length).toBe(0)
   })

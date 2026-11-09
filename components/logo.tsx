@@ -25,7 +25,6 @@ export function Logo({ size = "md", className = "" }: LogoProps) {
   }, [])
 
   const dimensions = sizeMap[size]
-  // Usa o ícone apropriado baseado no tema
   const iconSrc = mounted && theme === "dark" ? "/logo.png" : "/logo.png"
 
   return (

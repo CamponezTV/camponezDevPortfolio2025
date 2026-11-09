@@ -2,7 +2,6 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { LoadingScreen } from '@/components/loading-screen'
 
-// Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
     div: ({ children }: any) => <div>{children}</div>,
@@ -12,7 +11,6 @@ jest.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: any) => <>{children}</>,
 }))
 
-// Mock Logo component
 jest.mock('@/components/logo', () => ({
   Logo: () => <div data-testid="logo">Logo</div>,
 }))
@@ -36,7 +34,6 @@ describe('LoadingScreen Component', () => {
 
   it('should display percentage', () => {
     const { container } = render(<LoadingScreen />)
-    // Progress percentage should be displayed
     expect(container.textContent).toMatch(/\d+%/)
   })
 })

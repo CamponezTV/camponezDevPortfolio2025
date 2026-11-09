@@ -20,7 +20,6 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
   return (
     <div ref={containerRef} className="relative">
       {children}
-      {/* Progress bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-primary z-[100] origin-left will-change-transform"
         style={{ scaleX: smoothProgress }}

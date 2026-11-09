@@ -18,19 +18,15 @@ export function AnimationProvider({ children }: { children: ReactNode }) {
   const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
-    // Mark as hydrated after first render
     setIsHydrated(true)
   }, [])
 
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        // Page became visible again
         setIsPageVisible(true)
-        // Change reset key to force re-mounting of components
         setResetKey(prev => prev + 1)
         
-        // Small scroll to trigger animations
         const currentScroll = window.scrollY
         requestAnimationFrame(() => {
           window.scrollTo(0, currentScroll + 1)

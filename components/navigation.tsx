@@ -56,7 +56,6 @@ export function Navigation() {
             <Logo size="sm" />
           </motion.a>
 
-          {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center gap-8">
             {navItems.map((item, i) => (
               <motion.li
@@ -76,9 +75,7 @@ export function Navigation() {
             ))}
           </ul>
 
-          {/* Language Selector and Mobile Menu Button */}
           <div className="flex items-center gap-4">
-            {/* Language Selector Desktop */}
             <div className="hidden md:flex gap-2 items-center">
               <Globe size={18} className="text-muted-foreground" />
               <button
@@ -103,7 +100,6 @@ export function Navigation() {
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
             <button onClick={() => setIsOpen(true)} className="md:hidden p-2 text-foreground" aria-label={t.common.home}>
               <Menu size={24} />
             </button>
@@ -111,7 +107,6 @@ export function Navigation() {
         </nav>
       </motion.header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -147,7 +142,6 @@ export function Navigation() {
                 </motion.a>
               ))}
 
-              {/* Language Selector Mobile */}
               <div className="flex gap-4 mt-8 border-t border-border pt-8">
                 <button
                   onClick={() => {
@@ -178,7 +172,6 @@ export function Navigation() {
               </div>
             </nav>
 
-            {/* Background Animation */}
             <motion.div
               className="absolute inset-0 -z-10"
               initial={{ scale: 0 }}

@@ -9,7 +9,6 @@ export function LoadingScreen() {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    // Bloquear scroll enquanto está carregando
     if (isLoading) {
       document.documentElement.style.overflow = 'hidden'
       document.body.style.overflow = 'hidden'
@@ -17,7 +16,6 @@ export function LoadingScreen() {
       document.body.style.width = '100%'
       document.body.style.touchAction = 'none'
 
-      // Prevenir scroll com wheel e touch
       const preventScroll = (e: Event) => {
         e.preventDefault()
       }

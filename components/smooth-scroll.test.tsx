@@ -2,7 +2,6 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { SmoothScroll } from '@/components/smooth-scroll'
 
-// Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,

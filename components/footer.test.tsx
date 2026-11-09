@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-// Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
     footer: ({ children }: any) => <footer>{children}</footer>,
@@ -14,7 +13,6 @@ jest.mock('framer-motion', () => ({
   },
 }))
 
-// Mock do hook de traduções
 jest.mock('@/hooks/use-translations', () => ({
   useTranslations: () => ({
     nav: {
@@ -35,7 +33,6 @@ jest.mock('@/hooks/use-translations', () => ({
   }),
 }))
 
-// Now import after mocking
 import { Footer } from '@/components/footer'
 
 describe('Footer Component', () => {

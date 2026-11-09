@@ -39,7 +39,7 @@ describe('Translations', () => {
   it('deve ter 6 projetos na lista (4 na section + 2 no catálogo)', () => {
     const pt = getTranslations('pt')
     expect(pt.projects.items).toHaveLength(6)
-    expect(pt.projects.items[0].title).toBe('Xmetal Token')
+    expect(pt.projects.items[0].title).toBe('O Incidente WebSite')
     expect(pt.projects.items[3].title).toBe('Novasyn LTDA')
     expect(pt.projects.items[4].title).toBe('Portfolio 2024')
     expect(pt.projects.items[5].title).toBe('Portfolio 2026')

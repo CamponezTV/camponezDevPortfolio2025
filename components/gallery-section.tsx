@@ -40,7 +40,6 @@ export function GallerySection() {
   return (
     <section ref={containerRef} id="gallery" className="relative py-32 md:py-48 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,30 +53,25 @@ export function GallerySection() {
           </h2>
         </motion.div>
 
-        {/* Masonry Grid with Parallax */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {/* Column 1 */}
           <motion.div style={{ y: y1 }} className="space-y-4 md:space-y-6 hidden md:block">
             {images.slice(0, 2).map((image, i) => (
               <GalleryImage key={i} image={image} index={i} />
             ))}
           </motion.div>
 
-          {/* Column 2 */}
           <motion.div style={{ y: y2 }} className="space-y-4 md:space-y-6 hidden md:block md:mt-12">
             {images.slice(2, 4).map((image, i) => (
               <GalleryImage key={i} image={image} index={i + 2} />
             ))}
           </motion.div>
 
-          {/* Column 3 */}
           <motion.div style={{ y: y3 }} className="space-y-4 md:space-y-6 hidden md:block">
             {images.slice(4, 6).map((image, i) => (
               <GalleryImage key={i} image={image} index={i + 4} />
             ))}
           </motion.div>
 
-          {/* Mobile Version - No Parallax */}
           <div className="col-span-2 md:hidden">
             <div className="grid grid-cols-2 gap-4">
               {images.map((image, i) => (
@@ -87,7 +81,6 @@ export function GallerySection() {
           </div>
         </div>
 
-        {/* Quote */}
         <motion.blockquote
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -123,23 +116,18 @@ function GalleryImage({ image, index }: { image: GalleryImageType; index: number
         className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
       />
 
-      {/* Overlay - appears on hover */}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-      {/* Content - appears on hover */}
       <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-        {/* Description/Title */}
         <p className="text-sm md:text-base font-semibold text-white mb-2 line-clamp-2 drop-shadow-lg">
           {image.alt}
         </p>
         
-        {/* Location */}
         <span className="text-xs md:text-sm text-primary font-medium drop-shadow-lg">
           📍 {image.location}
         </span>
       </div>
 
-      {/* Border Animation */}
       <div className="absolute inset-0 border border-transparent group-hover:border-primary/50 rounded-xl transition-colors duration-300 pointer-events-none" />
     </motion.div>
   )

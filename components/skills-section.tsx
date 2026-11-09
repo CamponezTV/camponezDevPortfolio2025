@@ -45,7 +45,6 @@ export function SkillsSection() {
   const stats = t.skills.stats
   const technologies = t.skills.technologies
 
-  // Auto-play infinito
   useEffect(() => {
     if (!isAutoplay || !carouselRef.current) return
 
@@ -60,7 +59,6 @@ export function SkillsSection() {
     return () => clearInterval(timer)
   }, [isAutoplay])
 
-  // Mapeamento de tecnologias para ícones (react-icons simple icons)
   const techIcons: Record<string, any> = {
     'React': SiReact,
     'React.js': SiReact,
@@ -126,11 +124,9 @@ export function SkillsSection() {
 
   return (
     <section ref={containerRef} id="skills" className="relative py-20 md:py-32 overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -144,9 +140,7 @@ export function SkillsSection() {
           </h2>
         </motion.div>
 
-        {/* Skills Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-16 items-start">
-          {/* Left - Skill Bars */}
           <div className="space-y-8">
             {skills.map((skill, i) => (
               <motion.div
@@ -172,7 +166,6 @@ export function SkillsSection() {
             ))}
           </div>
 
-          {/* Right - Stats */}
           <div className="grid grid-cols-2 gap-6">
             {stats.map((stat, i) => (
               <motion.div
@@ -199,7 +192,6 @@ export function SkillsSection() {
           </div>
         </div>
 
-        {/* Technologies Carousel */}
         <motion.div 
           initial={{ opacity: 0}}
           whileInView={{ opacity: 1}}
@@ -252,7 +244,6 @@ export function SkillsSection() {
             </Carousel>
           </div>
 
-          {/* Scroll Hint */}
           <div className="text-center mt-6 text-xs text-muted-foreground">
             Arraste para explorar mais →
           </div>

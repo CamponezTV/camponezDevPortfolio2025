@@ -29,7 +29,6 @@ export function AboutSection() {
 
   return (
     <section ref={containerRef} id="about" className="relative py-32 md:py-48 overflow-hidden">
-      {/* Background */}
       <motion.div
         style={{ y }}
         className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent"
@@ -37,7 +36,6 @@ export function AboutSection() {
 
       <div className="container mx-auto px-3 sm:px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
-          {/* Left - Image */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -54,10 +52,8 @@ export function AboutSection() {
                 />
               </motion.div>
 
-              {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
 
-              {/* Floating Badge */}
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -70,7 +66,6 @@ export function AboutSection() {
               </motion.div>
             </div>
 
-            {/* Decorative Elements */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
@@ -83,7 +78,6 @@ export function AboutSection() {
             />
           </motion.div>
 
-          {/* Right - Content */}
           <div ref={textRef} className="space-y-4 sm:space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -115,7 +109,6 @@ export function AboutSection() {
               <span className="text-primary font-medium"> {t.about.subheading.split('.').slice(1).join('.')}</span>
             </motion.p>
 
-            {/* Highlights */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -141,14 +134,11 @@ export function AboutSection() {
           </div>
         </div>
 
-        {/* Roadmaps Section */}
         <div className="mt-24 space-y-32">
-          {/* Companies Roadmap */}
           <div>
             <RoadmapSection type="companies" />
           </div>
 
-          {/* Education Roadmap */}
           <div>
             <RoadmapSection type="education" />
           </div>

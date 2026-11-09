@@ -24,7 +24,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
   const t = useTranslations()
   const [selectedItem, setSelectedItem] = useState<RoadmapItem | null>(null)
   
-  // Bloquear scroll quando modal está aberto
   useEffect(() => {
     if (selectedItem) {
       document.documentElement.style.overflow = 'hidden'
@@ -42,7 +41,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
 
   return (
     <div className="space-y-12">
-      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -53,9 +51,7 @@ export function RoadmapSection({ type }: RoadmapProps) {
         <p className="text-muted-foreground">{roadmapData.subtitle}</p>
       </motion.div>
 
-      {/* Timeline */}
       <div className="relative space-y-8">
-        {/* Vertical Line */}
         <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20" />
 
         {items.map((item, index) => (
@@ -69,7 +65,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
               index % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'
             }`}
           >
-            {/* Content */}
             <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -77,7 +72,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
                 className="p-6 rounded-xl bg-card border border-border hover:border-primary/50 cursor-pointer transition-all group"
               >
                 <div className="flex items-start gap-4 md:gap-0 md:flex-col">
-                  {/* Logo */}
                   <div className="flex-shrink-0 md:flex md:justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg bg-primary/10 flex items-center justify-center">
                     <img 
                       src={item.logo} 
@@ -90,7 +84,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
                     />
                   </div>
 
-                  {/* Info */}
                   <div className="flex-1">
                     <h4 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                       {item.title}
@@ -105,19 +98,16 @@ export function RoadmapSection({ type }: RoadmapProps) {
               </motion.div>
             </div>
 
-            {/* Timeline Dot */}
             <motion.div
               whileHover={{ scale: 1.3 }}
               className="hidden md:block relative w-6 h-6 rounded-full bg-primary border-4 border-background"
             />
 
-            {/* Spacer */}
             <div className="flex-1 hidden md:block" />
           </motion.div>
         ))}
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
         {selectedItem && (
           <motion.div
@@ -135,7 +125,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
               onClick={(e) => e.stopPropagation()}
               className="bg-card border border-border rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
             >
-              {/* Header */}
               <div className="sticky top-0 bg-gradient-to-b from-card to-card/50 p-6 border-b border-border flex items-start justify-between">
                 <div className="flex gap-4 items-start flex-1">
                   <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -163,9 +152,7 @@ export function RoadmapSection({ type }: RoadmapProps) {
                 </button>
               </div>
 
-              {/* Content */}
               <div className="p-6 space-y-6">
-                {/* Description */}
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">{roadmapData.labels.description}</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -173,7 +160,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
                   </p>
                 </div>
 
-                {/* Achievements */}
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-3">{roadmapData.labels.achievements}</h3>
                   <ul className="space-y-2">
@@ -192,7 +178,6 @@ export function RoadmapSection({ type }: RoadmapProps) {
                   </ul>
                 </div>
 
-                {/* Technologies */}
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-3">{roadmapData.labels.technologies}</h3>
                   <div className="flex flex-wrap gap-2">

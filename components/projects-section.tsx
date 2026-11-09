@@ -14,7 +14,6 @@ export function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const t = useTranslations()
 
-  // Bloquear scroll quando catalog está aberto
   useEffect(() => {
     if (catalogOpen) {
       document.documentElement.style.overflow = 'hidden'
@@ -43,7 +42,6 @@ export function ProjectsSection() {
   return (
     <section ref={containerRef} id="projects" className="relative py-32 md:py-48 bg-card/50">
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -70,9 +68,7 @@ export function ProjectsSection() {
           </motion.button>
         </motion.div>
 
-        {/* Projects Grid */}
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Disclaimer */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -99,7 +95,6 @@ export function ProjectsSection() {
             </ul>
           </motion.div>
 
-          {/* Projects */}
           {projects.slice(0, 4).map((project, i) => (
             <motion.article
               key={project.id}
@@ -126,13 +121,11 @@ export function ProjectsSection() {
                   transition={{ duration: 0.6 }}
                 />
 
-                {/* Overlay */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"
                   animate={{ opacity: hoveredId === project.id ? 1 : 0.7 }}
                 />
 
-                {/* Content */}
                 <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
                   <motion.span
                     className="text-primary text-sm font-medium mb-2"
@@ -158,7 +151,6 @@ export function ProjectsSection() {
                     {project.description}
                   </motion.p>
 
-                  {/* Tags */}
                   <motion.div
                     className="flex flex-wrap gap-2 mb-4"
                     initial={{ opacity: 0 }}
@@ -174,7 +166,6 @@ export function ProjectsSection() {
                     ))}
                   </motion.div>
 
-                  {/* Links */}
                   <motion.div
                     className="flex gap-4"
                     initial={{ opacity: 0, y: 20 }}
@@ -203,7 +194,6 @@ export function ProjectsSection() {
                   </motion.div>
                 </div>
 
-                {/* Corner Decoration */}
                 <motion.div
                   className="absolute top-6 right-6 w-12 h-12 rounded-full bg-primary/20 backdrop-blur-sm flex items-center justify-center"
                   animate={{
@@ -219,7 +209,6 @@ export function ProjectsSection() {
         </div>
       </div>
 
-      {/* Projects Catalog Modal */}
       <ProjectsCatalog 
         isOpen={catalogOpen} 
         onClose={() => {

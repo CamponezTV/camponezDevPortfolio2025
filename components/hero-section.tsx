@@ -33,7 +33,6 @@ export function HeroSection() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden noise"
     >
-      {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           style={{ y: smoothY }}
@@ -49,15 +48,12 @@ export function HeroSection() {
         />
       </div>
 
-      {/* Grid Background */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
 
-      {/* Main Content */}
       <motion.div
         style={{ opacity: smoothOpacity, scale: smoothScale }}
         className="relative z-10 container mx-auto px-4 sm:px-6 text-center"
       >
-        {/* Name */}
         <motion.h1 style={{ y: textY }} className="relative">
           <motion.span
             initial={{ opacity: 0, y: 100 }}
@@ -85,7 +81,6 @@ export function HeroSection() {
           </motion.span>
         </motion.h1>
 
-        {/* Animated Line */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
@@ -93,7 +88,6 @@ export function HeroSection() {
           className="w-full max-w-md mx-auto h-px bg-gradient-to-r from-transparent via-primary to-transparent mt-12"
         />
 
-        {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -105,7 +99,6 @@ export function HeroSection() {
           <span className="text-primary">{t.hero.passion}</span>
         </motion.p>
 
-        {/* Social Links */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -130,7 +123,6 @@ export function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Side Text */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
@@ -142,7 +134,6 @@ export function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -160,7 +151,6 @@ export function HeroSection() {
         </motion.a>
       </motion.div>
 
-      {/* Floating Elements */}
       <motion.div
         animate={{
           rotate: 360,

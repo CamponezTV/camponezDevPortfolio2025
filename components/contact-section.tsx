@@ -77,7 +77,6 @@ export function ContactSection() {
         message: t.contact.form.success,
       })
 
-      // Limpar formulário
       setFormData({
         name: '',
         email: '',
@@ -85,7 +84,6 @@ export function ContactSection() {
         message: '',
       })
 
-      // Limpar mensagem após 5 segundos
       setTimeout(() => setSubmitMessage(null), 5000)
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : t.contact.form.error
@@ -94,7 +92,6 @@ export function ContactSection() {
         message: errorMessage,
       })
 
-      // Limpar mensagem após 5 segundos
       setTimeout(() => setSubmitMessage(null), 5000)
     } finally {
       setIsSubmitting(false)
@@ -103,7 +100,6 @@ export function ContactSection() {
 
   return (
     <section ref={containerRef} id="contact" className="relative py-16 sm:py-32 md:py-48 bg-card/50 overflow-x-hidden">
-      {/* Background */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
           animate={{
@@ -124,7 +120,6 @@ export function ContactSection() {
       </div>
 
       <div className="container mx-auto px-2 sm:px-6 relative z-10 max-w-full w-full overflow-hidden">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -141,7 +136,6 @@ export function ContactSection() {
         </motion.div>
 
         <div className="w-full overflow-hidden max-w-full flex flex-col sm:flex-row gap-6 sm:gap-10 lg:gap-16">
-          {/* Left - Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -173,7 +167,6 @@ export function ContactSection() {
                 </motion.a>
               ))}
               
-              {/* Resume Download Button */}
               <motion.button
                 onClick={downloadResume}
                 initial={{ opacity: 0, y: 30 }}
@@ -196,7 +189,6 @@ export function ContactSection() {
               </motion.button>
             </div>
 
-            {/* CTA */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -240,7 +232,6 @@ export function ContactSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right - Form */}
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: 50 }}

@@ -5,7 +5,6 @@ describe('useIsMobile hook', () => {
   const originalMatchMedia = window.matchMedia
 
   beforeEach(() => {
-    // Mock matchMedia
     window.matchMedia = jest.fn((query: string) => ({
       matches: query === '(max-width: 767px)',
       media: query,

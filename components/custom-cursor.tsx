@@ -15,11 +15,9 @@ export function CustomCursor() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      // Only update if position actually changed (throttle)
       if (Math.abs(e.clientX - lastPositionRef.current.x) > 2 || Math.abs(e.clientY - lastPositionRef.current.y) > 2) {
         lastPositionRef.current = { x: e.clientX, y: e.clientY }
         
-        // Cancel previous RAF if exists
         if (rafRef.current !== null) {
           cancelAnimationFrame(rafRef.current)
         }

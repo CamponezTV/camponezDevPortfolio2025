@@ -34,7 +34,6 @@ export function Footer() {
 
   return (
     <footer className="relative py-20 bg-background border-t border-border overflow-hidden" key={resetKey}>
-      {/* Background Elements */}
       <div className="absolute inset-0 hidden lg:block">
         <motion.div
           animate={{ rotate: 360 }}
@@ -49,9 +48,7 @@ export function Footer() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* Main Footer Content */}
         <div className="grid md:grid-cols-3 gap-12 mb-16">
-          {/* Brand */}
           <div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -72,7 +69,6 @@ export function Footer() {
             </motion.p>
           </div>
 
-          {/* Navigation */}
           <div>
             <h3 className="text-sm font-medium text-foreground mb-4 tracking-widest uppercase">{t.footer.quickLinks}</h3>
             <ul className="space-y-3">
@@ -92,7 +88,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Social */}
           <div>
             <h3 className="text-sm font-medium text-foreground mb-4 tracking-widest uppercase">{t.footer.contact}</h3>
             <div className="flex gap-4">
@@ -115,7 +110,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Large Name Display */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -131,7 +125,6 @@ export function Footer() {
           </motion.div>
         </motion.div>
 
-        {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-border">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} {t.footer.brand}. {t.footer.rights}

@@ -1,7 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-// Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
     header: ({ children }: any) => <header>{children}</header>,
@@ -14,7 +13,6 @@ jest.mock('framer-motion', () => ({
   AnimatePresence: ({ children }: any) => <>{children}</>,
 }))
 
-// Mock do hook de traduções
 jest.mock('@/hooks/use-translations', () => ({
   useTranslations: () => ({
     nav: {
@@ -32,7 +30,6 @@ jest.mock('@/hooks/use-translations', () => ({
   }),
 }))
 
-// Mock do context de language
 jest.mock('@/context/language-context', () => ({
   useLanguage: () => ({
     language: 'pt',
@@ -40,19 +37,16 @@ jest.mock('@/context/language-context', () => ({
   }),
 }))
 
-// Mock do componente Logo
 jest.mock('@/components/logo', () => ({
   Logo: () => <div data-testid="logo">Logo</div>,
 }))
 
-// Mock next-themes
 jest.mock('next-themes', () => ({
   useTheme: () => ({
     theme: 'dark',
   }),
 }))
 
-// Now import after mocking
 import { Navigation } from '@/components/navigation'
 
 describe('Navigation Component', () => {
