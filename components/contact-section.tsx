@@ -2,20 +2,25 @@
 
 import type React from "react"
 
-import { useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Send, Mail, MapPin, Phone, ArrowUpRight, Check, AlertCircle, Github, Linkedin, Download } from "lucide-react"
+import { Send, Mail, MapPin, ArrowUpRight, Check, AlertCircle, Github, Linkedin, Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/hooks/use-toast"
 import { useTranslations } from "@/hooks/use-translations"
 import { useLanguage } from "@/context/language-context"
+import { TurnstileWidget } from "./turnstile-widget"
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
 export function ContactSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaKey, setCaptchaKey] = useState(0)
+  const handleCaptchaToken = useCallback((token: string | null) => setCaptchaToken(token), [])
   const [submitMessage, setSubmitMessage] = useState<{
     type: 'success' | 'error'
     message: string
@@ -26,7 +31,6 @@ export function ContactSection() {
     subject: '',
     message: '',
   })
-  const { toast } = useToast()
   const t = useTranslations()
   const { language } = useLanguage()
 
@@ -63,7 +67,7 @@ export function ContactSection() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken: captchaToken }),
       })
 
       const data = await response.json()
@@ -95,6 +99,8 @@ export function ContactSection() {
       setTimeout(() => setSubmitMessage(null), 5000)
     } finally {
       setIsSubmitting(false)
+      setCaptchaToken(null)
+      setCaptchaKey((key) => key + 1)
     }
   }
 
@@ -336,10 +342,14 @@ export function ContactSection() {
               </motion.div>
             )}
 
+            {TURNSTILE_SITE_KEY && (
+              <TurnstileWidget key={captchaKey} siteKey={TURNSTILE_SITE_KEY} onToken={handleCaptchaToken} />
+            )}
+
             <Button
               type="submit"
               className="w-full text-xs sm:text-base py-1.5 sm:py-3 h-9 sm:h-11 bg-primary text-primary-foreground hover:bg-primary/90 group"
-              disabled={isSubmitting}
+              disabled={isSubmitting || (Boolean(TURNSTILE_SITE_KEY) && !captchaToken)}
             >
               {isSubmitting ? (
                 <motion.span

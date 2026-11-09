@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import { motion, useScroll, useTransform, useSpring } from "framer-motion"
-import { ChevronDown, Instagram, Linkedin, Github, Twitter } from "lucide-react"
+import { ChevronDown, Linkedin, Github } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
 
 const socialLinks = [

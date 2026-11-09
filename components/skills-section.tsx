@@ -3,8 +3,8 @@
 import { useRef, useState, useEffect } from "react"
 import { motion, useInView, useScroll, useTransform } from "framer-motion"
 import { useTranslations } from "@/hooks/use-translations"
-import { useAnimationContext } from "./animation-context"
 import {
+  type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,
@@ -23,14 +23,15 @@ import {
   SiMongodb,
   SiPython,
 } from "react-icons/si"
-import { TbApi } from "react-icons/tb";
+import { TbApi } from "react-icons/tb"
+import type { IconType } from "react-icons"
 import { Globe } from "lucide-react"
 
 export function SkillsSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(containerRef, { once: true, margin: "-100px" })
   const t = useTranslations()
-  const carouselRef = useRef<any>(null)
+  const carouselRef = useRef<CarouselApi>(undefined)
   const [isAutoplay, setIsAutoplay] = useState(true)
 
   const { scrollYProgress } = useScroll({
@@ -49,17 +50,19 @@ export function SkillsSection() {
     if (!isAutoplay || !carouselRef.current) return
 
     const timer = setInterval(() => {
-      if (carouselRef.current.canScrollNext()) {
-        carouselRef.current.scrollNext()
+      const carousel = carouselRef.current
+      if (!carousel) return
+      if (carousel.canScrollNext()) {
+        carousel.scrollNext()
       } else {
-        carouselRef.current.scrollTo(0)
+        carousel.scrollTo(0)
       }
     }, 1000)
 
     return () => clearInterval(timer)
   }, [isAutoplay])
 
-  const techIcons: Record<string, any> = {
+  const techIcons: Record<string, IconType> = {
     'React': SiReact,
     'React.js': SiReact,
     'Next.js': SiNextdotjs,

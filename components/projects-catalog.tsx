@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useEffect, useState, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, ArrowLeft, Github, ExternalLink, Target, Lightbulb, Zap, Users, Calendar, GraduationCap } from "lucide-react"
@@ -47,7 +48,7 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
     }
   }, [isOpen])
 
-  const projects = useMemo(() => t.projects.items.map((item: any, i: number) => ({
+  const projects = useMemo(() => t.projects.items.map((item, i) => ({
     id: i + 1,
     title: item.title,
     category: item.category,
@@ -146,12 +147,14 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.1 }}
-                        className="aspect-video rounded-xl overflow-hidden bg-muted shadow-lg"
+                        className="relative aspect-video rounded-xl overflow-hidden bg-muted shadow-lg"
                       >
-                        <img
+                        <Image
                           src={selectedProject.image}
                           alt={selectedProject.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes="(min-width: 768px) 50vw, 100vw"
+                          className="object-cover"
                         />
                       </motion.div>
                     )}
@@ -341,10 +344,12 @@ export function ProjectsCatalog({ isOpen, onClose, selectedProjectId }: Projects
                       >
                         <div className="relative aspect-video rounded-lg overflow-hidden bg-muted mb-3">
                           {project.image && (
-                            <img
+                            <Image
                               src={project.image}
                               alt={project.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                              fill
+                              sizes="(min-width: 768px) 33vw, 100vw"
+                              className="object-cover group-hover:scale-110 transition-transform duration-500"
                             />
                           )}
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors" />

@@ -1,9 +1,9 @@
 "use client"
 
+import Image from "next/image"
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useTranslations } from "@/hooks/use-translations"
-import { useAnimationContext } from "./animation-context"
 
 type GalleryImageType = {
   src: string
@@ -110,10 +110,14 @@ function GalleryImage({ image, index }: { image: GalleryImageType; index: number
       whileHover={{ scale: 1.02 }}
       className="relative group overflow-hidden rounded-xl"
     >
-      <img
+      <Image
         src={image.src || "/placeholder.svg"}
         alt={image.alt}
-        className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
+        width={0}
+        height={0}
+        sizes="(min-width: 1024px) 33vw, 100vw"
+        style={{ width: "100%", height: "auto" }}
+        className="object-cover transition-transform duration-700 group-hover:scale-110"
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />

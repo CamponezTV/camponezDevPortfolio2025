@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
@@ -73,13 +74,14 @@ export function RoadmapSection({ type }: RoadmapProps) {
               >
                 <div className="flex items-start gap-4 md:gap-0 md:flex-col">
                   <div className="flex-shrink-0 md:flex md:justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <img 
-                      src={item.logo} 
+                    <Image
+                      src={item.logo}
                       alt={item.title}
+                      width={40}
+                      height={40}
                       className="w-8 h-8 md:w-10 md:h-10 object-contain"
                       onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        target.style.display = 'none'
+                        e.currentTarget.style.display = 'none'
                       }}
                     />
                   </div>
@@ -128,13 +130,14 @@ export function RoadmapSection({ type }: RoadmapProps) {
               <div className="sticky top-0 bg-gradient-to-b from-card to-card/50 p-6 border-b border-border flex items-start justify-between">
                 <div className="flex gap-4 items-start flex-1">
                   <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <img 
+                    <Image
                       src={selectedItem.logo}
                       alt={selectedItem.title}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 object-contain"
                       onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        target.style.display = 'none'
+                        e.currentTarget.style.display = 'none'
                       }}
                     />
                   </div>

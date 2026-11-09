@@ -1,10 +1,10 @@
 "use client"
 
+import Image from "next/image"
 import { useRef } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { Sparkles, Zap, Heart } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
-import { useAnimationContext } from "./animation-context"
 import { RoadmapSection } from "./roadmap-section"
 
 const highlightIcons = [
@@ -25,7 +25,6 @@ export function AboutSection() {
   })
 
   const y = useTransform(scrollYProgress, [0, 1], ["100px", "-100px"])
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
 
   return (
     <section ref={containerRef} id="about" className="relative py-32 md:py-48 overflow-hidden">
@@ -44,11 +43,13 @@ export function AboutSection() {
             className="relative"
           >
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
-              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.6 }} className="w-full h-full">
-                <img
+              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.6 }} className="relative w-full h-full">
+                <Image
                   src="/arthur-camponez.jpg"
                   alt="Arthur Camponez Marinho"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  className="object-cover"
                 />
               </motion.div>
 

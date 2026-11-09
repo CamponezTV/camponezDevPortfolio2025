@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Globe } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
 import { useTranslations } from "@/hooks/use-translations"
-import { Language } from "@/config/translations"
 import { Logo } from "./logo"
 
 export function Navigation() {

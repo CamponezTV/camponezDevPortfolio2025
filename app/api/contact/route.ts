@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { validateEmail, checkRateLimit } from '@/lib/security'
+import { validateEmail } from '@/lib/security'
+import { isWithinRateLimit } from '@/lib/rate-limit'
+import { verifyTurnstileToken } from '@/lib/turnstile'
 import { securityConfig } from '@/lib/security-config'
 import {
   buildAdminNotificationEmail,
@@ -162,9 +164,7 @@ export async function OPTIONS() {
 export async function POST(request: NextRequest) {
   try {
     const clientIp = getClientIp(request)
-    const { maxRequests, windowMs } = securityConfig.rateLimit.contact
-
-    if (!checkRateLimit(clientIp, maxRequests, windowMs)) {
+    if (!(await isWithinRateLimit('contact', clientIp, securityConfig.rateLimit.contact))) {
       return errorResponse('Muitas tentativas. Tente novamente mais tarde.', 429)
     }
 
@@ -173,6 +173,11 @@ export async function POST(request: NextRequest) {
 
     const validation = validateContactBody(parsed.body)
     if (!validation.ok) return errorResponse(validation.error, 400)
+
+    const { turnstileToken } = (parsed.body ?? {}) as Record<string, unknown>
+    if (!(await verifyTurnstileToken(turnstileToken, clientIp))) {
+      return errorResponse('Falha na verificação anti-spam. Recarregue a página e tente novamente.', 400)
+    }
 
     const mail = readMailConfig()
     if (!mail.ok) return mail.response

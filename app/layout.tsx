@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next"
 import { Space_Grotesk, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
-import { AnimationProvider } from "@/components/animation-context"
 import "./globals.css"
 
 const spaceGrotesk = Space_Grotesk({
@@ -43,9 +42,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <AnimationProvider>
-            {children}
-          </AnimationProvider>
+          {children}
           <Analytics />
         </ThemeProvider>
       </body>

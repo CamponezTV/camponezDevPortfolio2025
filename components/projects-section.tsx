@@ -1,10 +1,9 @@
 "use client"
 
 import { useRef, useState, useEffect, useMemo } from "react"
-import { motion, useScroll } from "framer-motion"
+import { motion } from "framer-motion"
 import { ArrowUpRight, Github, ExternalLink } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
-import { useAnimationContext } from "./animation-context"
 import { ProjectsCatalog } from "./projects-catalog"
 
 export function ProjectsSection() {
@@ -22,11 +21,6 @@ export function ProjectsSection() {
       }
     }
   }, [catalogOpen])
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  })
 
   const projects = useMemo(() => t.projects.items.map((item, i) => ({
     id: i + 1,

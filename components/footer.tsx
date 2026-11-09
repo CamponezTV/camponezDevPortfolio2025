@@ -1,9 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Instagram, Linkedin, Github, Twitter, ArrowUp } from "lucide-react"
+import { Linkedin, Github, ArrowUp } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
-import { useAnimationContext } from "./animation-context"
 import { Logo } from "./logo"
 
 const socialLinks = [
@@ -11,18 +10,8 @@ const socialLinks = [
   { icon: Github, href: "https://github.com/", label: "GitHub" },
 ]
 
-const navLinks = [
-  { name: "Início", href: "#hero" },
-  { name: "Sobre", href: "#about" },
-  { name: "Habilidades", href: "#skills" },
-  { name: "Projetos", href: "#projects" },
-  { name: "Galeria", href: "#gallery" },
-  { name: "Contato", href: "#contact" },
-]
-
 export function Footer() {
   const t = useTranslations()
-  const { resetKey } = useAnimationContext()
 
   const navLinks = [
     { name: t.nav.home, href: "#hero" },
@@ -33,7 +22,7 @@ export function Footer() {
   ]
 
   return (
-    <footer className="relative py-20 bg-background border-t border-border overflow-hidden" key={resetKey}>
+    <footer className="relative py-20 bg-background border-t border-border overflow-hidden">
       <div className="absolute inset-0 hidden lg:block">
         <motion.div
           animate={{ rotate: 360 }}
