@@ -1,10 +1,21 @@
 const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 const VERIFY_TIMEOUT_MS = 5_000
 
-/** Without TURNSTILE_SECRET_KEY the check is skipped, so the form keeps working until the key is configured. */
+function getSiteKey(): string | undefined {
+  return process.env.TURNSTILE_SITE_KEY || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined
+}
+
+/**
+ * The check only runs when both keys are configured. With a secret but no site key the widget
+ * could never render, so enforcing it would reject every submission.
+ */
 export async function verifyTurnstileToken(token: unknown, clientIp: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY
   if (!secret) return true
+  if (!getSiteKey()) {
+    console.warn('TURNSTILE_SECRET_KEY is set but no site key is configured; skipping captcha verification')
+    return true
+  }
   if (typeof token !== 'string' || !token) return false
 
   try {
