@@ -425,6 +425,13 @@ export const translations = {
       language: 'Idioma',
       breadcrumb: 'Você está em',
     },
+    consent: {
+      title: 'Cookies e análise de visitas',
+      description: 'Uso o Google Analytics para entender como o site é visitado. Ele só é ativado se você aceitar.',
+      accept: 'Aceitar',
+      reject: 'Recusar',
+      preferences: 'Preferências de cookies',
+    },
   },
   en: {
     nav: {
@@ -849,6 +856,13 @@ export const translations = {
       closeMenu: 'Close menu',
       language: 'Language',
       breadcrumb: 'Breadcrumb',
+    },
+    consent: {
+      title: 'Cookies and analytics',
+      description: 'I use Google Analytics to understand how the site is visited. It only runs if you accept.',
+      accept: 'Accept',
+      reject: 'Decline',
+      preferences: 'Cookie preferences',
     },
   },
 } as const

@@ -1,5 +1,7 @@
 export const SITE_URL = "https://www.camponez.com.br"
 
+export const GOOGLE_TAG_MANAGER_ID = "GTM-TW3GR55R"
+
 export const PERSON = {
   fullName: "Arthur Camponez Marinho",
   shortName: "Arthur Camponez",

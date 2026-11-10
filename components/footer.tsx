@@ -3,6 +3,7 @@
 import { Github, Linkedin } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
 import { useTranslations } from "@/hooks/use-translations"
+import { openConsentPreferences } from "@/lib/consent"
 import { sectionPath } from "@/lib/i18n"
 import { PROFILES } from "@/lib/site"
 import { ArrowLink } from "./arrow-link"
@@ -65,9 +66,18 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {t.footer.brand} · {t.footer.rights}
-          </p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+            <p className="font-mono text-xs text-muted-foreground">
+              © {new Date().getFullYear()} {t.footer.brand} · {t.footer.rights}
+            </p>
+            <button
+              type="button"
+              onClick={openConsentPreferences}
+              className="w-fit cursor-pointer font-mono text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t.consent.preferences}
+            </button>
+          </div>
           <ArrowLink href="#top" className="text-subtle">
             {t.footer.backToTop}
           </ArrowLink>

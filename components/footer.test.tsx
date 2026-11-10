@@ -27,4 +27,10 @@ describe('Footer', () => {
 
     expect(screen.getByRole('link', { name: 'Voltar ao topo' })).toHaveAttribute('href', '#top')
   })
+
+  it('lets visitors review their cookie choice', () => {
+    render(<Footer />, { wrapper })
+
+    expect(screen.getByRole('button', { name: 'Preferências de cookies' })).toBeInTheDocument()
+  })
 })

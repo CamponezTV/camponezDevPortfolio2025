@@ -1,14 +1,17 @@
 const isDev = process.env.NODE_ENV === 'development'
 const TURNSTILE_ORIGIN = 'https://challenges.cloudflare.com'
+const GOOGLE_TAG_ORIGINS = 'https://www.googletagmanager.com https://*.googletagmanager.com'
+const GOOGLE_ANALYTICS_ORIGINS = 'https://*.google-analytics.com https://*.analytics.google.com'
+const TAG_ASSISTANT_ORIGIN = 'https://tagmanager.google.com'
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' ${TURNSTILE_ORIGIN}${isDev ? " 'unsafe-eval'" : ''}`,
-  "style-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline' ${TURNSTILE_ORIGIN} ${GOOGLE_TAG_ORIGINS} ${TAG_ASSISTANT_ORIGIN}${isDev ? " 'unsafe-eval'" : ''}`,
+  `style-src 'self' 'unsafe-inline' ${TAG_ASSISTANT_ORIGIN} https://fonts.googleapis.com`,
   "img-src 'self' data: https:",
-  "font-src 'self' data:",
-  `connect-src 'self' https://api.brevo.com ${TURNSTILE_ORIGIN}`,
-  `frame-src ${TURNSTILE_ORIGIN}`,
+  "font-src 'self' data: https://fonts.gstatic.com",
+  `connect-src 'self' https://api.brevo.com ${TURNSTILE_ORIGIN} ${GOOGLE_TAG_ORIGINS} ${GOOGLE_ANALYTICS_ORIGINS}`,
+  `frame-src ${TURNSTILE_ORIGIN} ${GOOGLE_TAG_ORIGINS}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
