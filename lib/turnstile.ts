@@ -5,10 +5,6 @@ function getSiteKey(): string | undefined {
   return process.env.TURNSTILE_SITE_KEY || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined
 }
 
-/**
- * The check only runs when both keys are configured. With a secret but no site key the widget
- * could never render, so enforcing it would reject every submission.
- */
 export async function verifyTurnstileToken(token: unknown, clientIp: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY
   if (!secret) return true

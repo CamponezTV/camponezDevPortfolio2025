@@ -1,49 +1,25 @@
+import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { Logo } from '@/components/logo'
-import React from 'react'
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: any) => {
-    // eslint-disable-next-line jsx-a11y/alt-text
-    return <img {...props} />
-  },
+  default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => <img {...props} alt={props.alt ?? ''} />,
 }))
 
-jest.mock('next-themes', () => ({
-  useTheme: () => ({
-    theme: 'dark',
-    setTheme: jest.fn(),
-  }),
-}))
+describe('Logo', () => {
+  it('renders the brand logo file', () => {
+    render(<Logo />)
 
-describe('Logo Component', () => {
-  it('should render logo image', () => {
-    render(<Logo size="md" />)
-    
-    const img = screen.getByAltText('Logo')
-    expect(img).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: 'Arthur Camponez' })).toHaveAttribute('src', '/logo.png')
   })
 
-  it('should apply correct size classes', () => {
-    const { rerender } = render(<Logo size="sm" />)
-    let img = screen.getByAltText('Logo')
-    expect(img).toHaveAttribute('width', '32')
+  it('applies the requested size and class', () => {
+    render(<Logo size={40} className="shrink-0" />)
 
-    rerender(<Logo size="lg" />)
-    img = screen.getByAltText('Logo')
-    expect(img).toHaveAttribute('width', '64')
-  })
-
-  it('should apply custom className', () => {
-    const { container } = render(<Logo className="custom-class" />)
-    const div = container.querySelector('.custom-class')
-    expect(div).toBeInTheDocument()
-  })
-
-  it('should render with priority prop', () => {
-    render(<Logo size="md" />)
-    const img = screen.getByAltText('Logo')
-    expect(img).toBeInTheDocument()
+    const logo = screen.getByRole('img', { name: 'Arthur Camponez' })
+    expect(logo).toHaveAttribute('width', '40')
+    expect(logo).toHaveAttribute('height', '40')
+    expect(logo).toHaveClass('shrink-0')
   })
 })

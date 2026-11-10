@@ -1,64 +1,30 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-
-jest.mock('framer-motion', () => ({
-  motion: {
-    footer: ({ children }: any) => <footer>{children}</footer>,
-    h2: ({ children }: any) => <h2>{children}</h2>,
-    p: ({ children }: any) => <p>{children}</p>,
-    div: ({ children }: any) => <div>{children}</div>,
-    a: ({ children }: any) => <a>{children}</a>,
-    li: ({ children }: any) => <li>{children}</li>,
-    button: ({ children }: any) => <button>{children}</button>,
-  },
-}))
-
-jest.mock('@/hooks/use-translations', () => ({
-  useTranslations: () => ({
-    nav: {
-      home: 'Início',
-      about: 'Sobre',
-      skills: 'Habilidades',
-      projects: 'Projetos',
-      contact: 'Contato',
-    },
-    footer: {
-      brand: 'Arthur Camponez Marinho',
-      description: 'Full Stack Developer passionate about creating extraordinary web experiences.',
-      quickLinks: 'Quick Links',
-      contact: 'Contact',
-      rights: 'All rights reserved.',
-      madeSince: 'Made in 2026',
-    },
-  }),
-}))
-
 import { Footer } from '@/components/footer'
+import { LanguageProvider } from '@/context/language-context'
 
-describe('Footer Component', () => {
-  it('should render footer element', () => {
-    const { container } = render(<Footer />)
-    const footer = container.querySelector('footer')
-    expect(footer).toBeInTheDocument()
+const wrapper = ({ children }: { children: React.ReactNode }) => <LanguageProvider language="pt">{children}</LanguageProvider>
+
+describe('Footer', () => {
+  it('shows the brand and a link for each section', () => {
+    render(<Footer />, { wrapper })
+
+    expect(screen.getAllByText('Arthur Camponez', { exact: false }).length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: 'Sobre' })).toHaveAttribute('href', '/#about')
+    expect(screen.getByRole('link', { name: 'Contato' })).toHaveAttribute('href', '/#contact')
   })
 
-  it('should display brand name', () => {
-    render(<Footer />)
-    expect(screen.getByText('Arthur Camponez Marinho')).toBeInTheDocument()
+  it('links to the real social profiles in a new tab', () => {
+    render(<Footer />, { wrapper })
+
+    const github = screen.getByRole('link', { name: 'GitHub' })
+    expect(github).toHaveAttribute('href', 'https://github.com/CamponezTV')
+    expect(github).toHaveAttribute('target', '_blank')
   })
 
-  it('should render navigation items', () => {
-    render(<Footer />)
-    
-    const navItems = ['Início', 'Sobre', 'Habilidades', 'Projetos', 'Contato']
-    navItems.forEach((item) => {
-      expect(screen.getByText(item)).toBeInTheDocument()
-    })
-  })
+  it('offers a way back to the top', () => {
+    render(<Footer />, { wrapper })
 
-  it('should render links in footer', () => {
-    render(<Footer />)
-    const links = screen.getAllByRole('link')
-    expect(links.length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: 'Voltar ao topo' })).toHaveAttribute('href', '#top')
   })
 })

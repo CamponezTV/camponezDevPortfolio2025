@@ -1,25 +1,10 @@
-"use client"
-
 import Image from "next/image"
 
 interface LogoProps {
-  size?: "sm" | "md" | "lg" | "hp"
+  size?: number
   className?: string
 }
 
-const sizeMap = {
-  sm: { width: 32, height: 32 },
-  md: { width: 48, height: 48 },
-  lg: { width: 64, height: 64 },
-  hp: { width: 128, height: 128 },
-}
-
-export function Logo({ size = "md", className = "" }: LogoProps) {
-  const { width, height } = sizeMap[size]
-
-  return (
-    <div className={className}>
-      <Image src="/logo.png" alt="Logo" width={width} height={height} className="rounded-lg" />
-    </div>
-  )
+export function Logo({ size = 28, className }: LogoProps) {
+  return <Image src="/logo.png" alt="Arthur Camponez" width={size} height={size} className={className} />
 }

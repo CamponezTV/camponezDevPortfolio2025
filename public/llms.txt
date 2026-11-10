@@ -1,0 +1,34 @@
+# Arthur Camponez Marinho
+
+> Desenvolvedor full stack em Vila Velha, Espírito Santo, Brasil. Trabalha com IA e dados na OCL Advogados e é cofundador e CTO da NOVAsyn. Programa desde 2021 e cursa Ciência da Computação na Universidade Vila Velha (UVV), com conclusão prevista para 2027. Fala português e inglês.
+
+Disponível para vagas, projetos e parcerias. Contato: arthurcamponez2020@gmail.com
+
+## Perfil
+
+- [Site](https://www.camponez.com.br/): portfólio com experiência, formação, habilidades e projetos
+- [Site in English](https://www.camponez.com.br/en): the same portfolio in English
+- [Projetos](https://www.camponez.com.br/projetos): todos os projetos com estudo de caso
+- [Projects in English](https://www.camponez.com.br/en/projects)
+- [LinkedIn](https://www.linkedin.com/in/arthurcmarinho/): histórico profissional
+- [GitHub](https://github.com/CamponezTV): código aberto
+- [Currículo em português](https://www.camponez.com.br/resume/cv-pt-br.pdf)
+- [Resume in English](https://www.camponez.com.br/resume/cv-en.pdf)
+
+## Experiência
+
+- OCL Advogados (mar 2026 até hoje): desenvolvedor full stack, IA e dados. APIs em Fastify, agendamento interno, triagem de RH com Claude, data warehouse com Airbyte e dbt, deploy na AWS.
+- NOVAsyn (dez 2025 até hoje): cofundador e CTO. Sites, aplicações e automações com IA para clientes.
+- Banestes Asset Management (fev 2024 a jan 2026): analista de TI. Apps e sites para o mercado financeiro.
+
+## Stack principal
+
+TypeScript, React, Next.js, React Native, Node.js, Fastify, Express, Prisma, PostgreSQL, MySQL, TimescaleDB, Redis, Airbyte, dbt Core, Docker, AWS, GitHub Actions, n8n, Anthropic Claude.
+
+## Projetos
+
+- [OCL Advogados](https://www.camponez.com.br/projetos/ocl-advogados): site institucional de escritório de recuperação de crédito
+- [Grupo Sartoretto](https://www.camponez.com.br/projetos/grupo-sartoretto): site de representação comercial com catálogo e mapa de lojas
+- [O Incidente](https://www.camponez.com.br/projetos/o-incidente): site do grupo de influenciadores O Incidente
+- [Banestes Asset](https://www.camponez.com.br/projetos/banestes-asset): plataforma institucional
+- [NOVAsyn](https://www.camponez.com.br/projetos/novasyn): site institucional da empresa

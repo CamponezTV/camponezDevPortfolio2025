@@ -1,148 +1,60 @@
 "use client"
 
 import Image from "next/image"
-import { useRef } from "react"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { Sparkles, Zap, Heart } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
+import { Reveal } from "./reveal"
 import { RoadmapSection } from "./roadmap-section"
 
-const highlightIcons = [
-  { icon: Sparkles },
-  { icon: Zap },
-  { icon: Heart },
-]
-
 export function AboutSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLDivElement>(null)
   const t = useTranslations()
-  const isInView = useInView(textRef, { once: true, margin: "-100px" })
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], ["100px", "-100px"])
 
   return (
-    <section ref={containerRef} id="about" className="relative py-32 md:py-48 overflow-hidden">
-      <motion.div
-        style={{ y }}
-        className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent"
-      />
+    <section id="about" className="border-t border-border py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-6 md:px-8">
+        <div className="grid items-center gap-12 md:grid-cols-[5fr_7fr] lg:gap-20">
+          <Reveal>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border bg-card">
+              <Image
+                src="/arthur-camponez.jpg"
+                alt="Arthur Camponez Marinho"
+                fill
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
 
-      <div className="container mx-auto px-3 sm:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-            className="relative"
-          >
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden">
-              <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.6 }} className="relative w-full h-full">
-                <Image
-                  src="/arthur-camponez.jpg"
-                  alt="Arthur Camponez Marinho"
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover"
-                />
-              </motion.div>
-
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, type: "spring" }}
-                className="absolute bottom-6 left-6 right-6 p-4 bg-card/80 backdrop-blur-xl rounded-xl border border-border"
-              >
-                <p className="text-sm text-muted-foreground">{t.about.badge}</p>
-                <p className="text-3xl font-bold text-gradient">2021</p>
-              </motion.div>
+          <Reveal stagger delay={0.06}>
+            <p data-reveal-item className="text-sm text-muted-foreground">
+              {t.about.title}
+            </p>
+            <h2
+              key={t.about.heading}
+              data-reveal-item
+              data-reveal-split
+              className="mt-3 text-3xl font-medium leading-[1.15] tracking-[-0.02em] text-foreground text-balance md:text-4xl"
+            >
+              {t.about.heading}
+            </h2>
+            <div className="mt-8 space-y-5 text-base leading-7 text-subtle text-pretty">
+              <p data-reveal-item>{t.about.description}</p>
+              <p data-reveal-item>{t.about.subheading}</p>
             </div>
 
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-              className="absolute -top-10 -right-10 w-40 h-40 border border-dashed border-primary/20 rounded-full will-change-transform hidden lg:block"
-            />
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
-              className="absolute -bottom-5 -left-5 w-20 h-20 bg-primary/20 rounded-full blur-2xl will-change-transform hidden lg:block"
-            />
-          </motion.div>
-
-          <div ref={textRef} className="space-y-4 sm:space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8 }}
-            >
-              <span className="text-primary text-xs sm:text-sm font-medium tracking-widest uppercase">{t.about.title}</span>
-              <h2 className="text-2xl sm:text-5xl md:text-6xl font-bold mt-2 sm:mt-4 text-balance leading-tight">
-                {t.about.heading.split(" ").slice(0, 1).join(" ")} <span className="text-gradient">{t.about.heading.split(" ").slice(1).join(" ")}</span>
-              </h2>
-            </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xs sm:text-base md:text-lg text-muted-foreground leading-relaxed text-pretty"
-            >
-              {t.about.description}
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-xs sm:text-base md:text-lg text-muted-foreground leading-relaxed text-pretty"
-            >
-              {t.about.subheading.split('.')[0] + '.'}
-              <span className="text-primary font-medium"> {t.about.subheading.split('.').slice(1).join('.')}</span>
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 pt-4 sm:pt-6"
-            >
-              {highlightIcons.map((item, i) => {
-                const highlightText = t.about.highlights[i]
-                return (
-                  <motion.div
-                    key={i}
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    className="p-3 sm:p-3 rounded-lg sm:rounded-xl bg-card border border-border hover:border-primary/50 transition-colors group text-center flex flex-col items-center"
-                  >
-                    <item.icon className="w-8 sm:w-9 md:w-10 h-8 sm:h-9 md:h-10 text-primary mb-3 sm:mb-4 group-hover:scale-110 transition-transform" />
-                    <h3 className="font-semibold text-sm sm:text-base md:text-lg text-foreground line-clamp-1 break-words">{highlightText.title}</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground mt-2 line-clamp-2 break-words">{highlightText.description}</p>
-                  </motion.div>
-                )
-              })}
-            </motion.div>
-
-          </div>
+            <dl className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
+              {t.about.facts.map((fact) => (
+                <div key={fact.label} data-reveal-item className="bg-background px-5 py-4">
+                  <dt className="text-xs text-muted-foreground">{fact.label}</dt>
+                  <dd className="mt-1 text-sm text-foreground">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
         </div>
 
-        <div className="mt-24 space-y-32">
-          <div>
-            <RoadmapSection type="companies" />
-          </div>
-
-          <div>
-            <RoadmapSection type="education" />
-          </div>
+        <div className="mt-24 grid gap-16 lg:grid-cols-2 lg:gap-12">
+          <RoadmapSection type="companies" />
+          <RoadmapSection type="education" />
         </div>
       </div>
     </section>

@@ -14,10 +14,6 @@ export function escapeHtml(text: string): string {
   return text.replace(/[&<>"']/g, (char) => map[char] || char)
 }
 
-/**
- * In-memory and per-instance: counters reset on cold start and are not shared across
- * serverless instances. Use a shared store (Redis/Upstash) for a real limit.
- */
 const requestCounts = new Map<string, { count: number; resetTime: number }>()
 
 export function checkRateLimit(

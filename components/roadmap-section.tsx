@@ -1,10 +1,12 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { X } from "lucide-react"
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronRight, X } from "lucide-react"
 import { useTranslations } from "@/hooks/use-translations"
+import { EASE_OUT_SOFT } from "@/lib/motion"
+import { Reveal } from "./reveal"
 
 type RoadmapItem = {
   id: number
@@ -18,97 +20,98 @@ type RoadmapItem = {
 }
 
 interface RoadmapProps {
-  type: 'companies' | 'education'
+  type: "companies" | "education"
+}
+
+function initialsOf(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter((word) => /^[A-Za-zÀ-ú]/.test(word))
+    .slice(0, 2)
+    .map((word) => word[0].toUpperCase())
+    .join("")
+}
+
+function OrgLogo({ src, alt, size }: { src: string; alt: string; size: number }) {
+  if (!src) {
+    return (
+      <span
+        aria-hidden
+        className="flex shrink-0 items-center justify-center rounded-lg border border-border bg-raised font-mono text-xs text-subtle"
+        style={{ width: size, height: size }}
+      >
+        {initialsOf(alt)}
+      </span>
+    )
+  }
+
+  return (
+    <span
+      className="flex shrink-0 items-center justify-center rounded-lg border border-border bg-[#f3f2f9]"
+      style={{ width: size, height: size }}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        width={size}
+        height={size}
+        className="object-contain p-1.5"
+        style={{ width: size, height: size }}
+        onError={(event) => {
+          event.currentTarget.style.display = "none"
+        }}
+      />
+    </span>
+  )
 }
 
 export function RoadmapSection({ type }: RoadmapProps) {
   const t = useTranslations()
   const [selectedItem, setSelectedItem] = useState<RoadmapItem | null>(null)
-  
+  const roadmap = t.about.roadmaps[type]
+
   useEffect(() => {
-    if (selectedItem) {
-      document.documentElement.style.overflow = 'hidden'
-      return () => {
-        document.documentElement.style.overflow = ''
-      }
+    if (!selectedItem) return
+    document.documentElement.style.overflow = "hidden"
+    const closeOnEscape = (event: KeyboardEvent) => event.key === "Escape" && setSelectedItem(null)
+    window.addEventListener("keydown", closeOnEscape)
+    return () => {
+      document.documentElement.style.overflow = ""
+      window.removeEventListener("keydown", closeOnEscape)
     }
   }, [selectedItem])
-  
-  const roadmapData = type === 'companies' 
-    ? t.about.roadmaps.companies 
-    : t.about.roadmaps.education
-  
-  const items = roadmapData.items
 
   return (
-    <div className="space-y-12">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-12"
-      >
-        <h3 className="text-2xl md:text-4xl font-bold mb-2">{roadmapData.title}</h3>
-        <p className="text-muted-foreground">{roadmapData.subtitle}</p>
-      </motion.div>
+    <>
+      <Reveal stagger>
+        <h3 data-reveal-item className="text-sm text-muted-foreground">
+          {roadmap.title}
+        </h3>
 
-      <div className="relative space-y-8">
-        <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-primary/20 via-primary/50 to-primary/20" />
-
-        {items.map((item, index) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            className={`flex flex-col md:gap-12 items-start md:items-center ${
-              index % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'
-            }`}
-          >
-            <div className={`flex-1 ${index % 2 === 0 ? 'md:text-right' : ''}`}>
-              <motion.div
-                whileHover={{ scale: 1.02 }}
+        <ul className="mt-4 border-t border-border">
+          {roadmap.items.map((item) => (
+            <li key={item.id} data-reveal-item className="border-b border-border">
+              <button
+                type="button"
                 onClick={() => setSelectedItem(item)}
-                className="p-6 rounded-xl bg-card border border-border hover:border-primary/50 cursor-pointer transition-all group"
+                className="group flex w-full cursor-pointer items-center gap-4 py-4 text-left transition-colors"
               >
-                <div className="flex items-start gap-4 md:gap-0 md:flex-col">
-                  <div className="flex-shrink-0 md:flex md:justify-center w-12 h-12 md:w-16 md:h-16 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Image
-                      src={item.logo}
-                      alt={item.title}
-                      width={40}
-                      height={40}
-                      className="w-8 h-8 md:w-10 md:h-10 object-contain"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none'
-                      }}
-                    />
-                  </div>
-
-                  <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h4>
-                    <p className="text-sm text-primary font-medium mt-1">{item.role}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{item.period}</p>
-                    <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            <motion.div
-              whileHover={{ scale: 1.3 }}
-              className="hidden md:block relative w-6 h-6 rounded-full bg-primary border-4 border-background"
-            />
-
-            <div className="flex-1 hidden md:block" />
-          </motion.div>
-        ))}
-      </div>
+                <OrgLogo src={item.logo} alt={item.title} size={40} />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[15px] text-foreground transition-colors group-hover:text-accent">
+                    {item.title}
+                  </span>
+                  <span className="mt-0.5 block truncate text-sm text-subtle">{item.role}</span>
+                </span>
+                <span className="hidden shrink-0 font-mono text-xs text-muted-foreground tabular-nums sm:block">
+                  {item.period}
+                </span>
+                <ChevronRight size={16} strokeWidth={1.5} className="shrink-0 text-muted-foreground transition-colors group-hover:text-accent" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
 
       <AnimatePresence>
         {selectedItem && (
@@ -116,92 +119,73 @@ export function RoadmapSection({ type }: RoadmapProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: EASE_OUT_SOFT }}
             onClick={() => setSelectedItem(null)}
-            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-card border border-border rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="roadmap-dialog-title"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.25, ease: EASE_OUT_SOFT }}
+              onClick={(event) => event.stopPropagation()}
+              className="max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-2xl border border-border bg-card"
             >
-              <div className="sticky top-0 bg-gradient-to-b from-card to-card/50 p-6 border-b border-border flex items-start justify-between">
-                <div className="flex gap-4 items-start flex-1">
-                  <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Image
-                      src={selectedItem.logo}
-                      alt={selectedItem.title}
-                      width={40}
-                      height={40}
-                      className="w-10 h-10 object-contain"
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none'
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-foreground">{selectedItem.title}</h2>
-                    <p className="text-primary font-medium mt-1">{selectedItem.role}</p>
-                    <p className="text-sm text-muted-foreground mt-1">{selectedItem.period}</p>
-                  </div>
+              <div className="flex items-start gap-4 border-b border-border p-6">
+                <OrgLogo src={selectedItem.logo} alt={selectedItem.title} size={48} />
+                <div className="min-w-0 flex-1">
+                  <h2 id="roadmap-dialog-title" className="text-xl font-medium text-foreground">
+                    {selectedItem.title}
+                  </h2>
+                  <p className="mt-1 text-sm text-subtle">{selectedItem.role}</p>
+                  {selectedItem.period && (
+                    <p className="mt-1 font-mono text-xs text-muted-foreground">{selectedItem.period}</p>
+                  )}
                 </div>
                 <button
+                  type="button"
                   onClick={() => setSelectedItem(null)}
-                  className="p-2 rounded-lg hover:bg-primary/10 transition-colors flex-shrink-0"
+                  aria-label={roadmap.labels.close}
+                  className="-mr-2 -mt-2 cursor-pointer rounded-md p-2 text-muted-foreground transition-colors hover:bg-raised hover:text-foreground"
                 >
-                  <X size={24} />
+                  <X size={18} strokeWidth={1.5} />
                 </button>
               </div>
 
-              <div className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{roadmapData.labels.description}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {selectedItem.description}
-                  </p>
-                </div>
+              <div className="space-y-8 p-6">
+                <section>
+                  <h3 className="text-xs text-muted-foreground">{roadmap.labels.description}</h3>
+                  <p className="mt-2 text-[15px] leading-7 text-subtle">{selectedItem.description}</p>
+                </section>
 
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-3">{roadmapData.labels.achievements}</h3>
-                  <ul className="space-y-2">
-                    {selectedItem.achievements.map((achievement, i) => (
-                      <motion.li
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="flex gap-3 text-muted-foreground"
-                      >
-                        <span className="text-primary font-bold flex-shrink-0">✓</span>
-                        <span>{achievement}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </div>
+                {selectedItem.achievements.length > 0 && (
+                  <section>
+                    <h3 className="text-xs text-muted-foreground">{roadmap.labels.achievements}</h3>
+                    <ul className="mt-3 space-y-2">
+                      {selectedItem.achievements.map((achievement) => (
+                        <li key={achievement} className="flex gap-3 text-[15px] leading-6 text-subtle">
+                          <span aria-hidden className="mt-2.5 size-1 shrink-0 rounded-full bg-accent" />
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
 
-                <div>
-                  <h3 className="text-lg font-semibold text-foreground mb-3">{roadmapData.labels.technologies}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedItem.technologies.map((tech, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: i * 0.05 }}
-                        className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
-                      >
-                        {tech}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
+                {selectedItem.technologies.length > 0 && (
+                  <section>
+                    <h3 className="text-xs text-muted-foreground">{roadmap.labels.technologies}</h3>
+                    <p className="mt-2 font-mono text-xs leading-6 text-subtle">{selectedItem.technologies.join(" · ")}</p>
+                  </section>
+                )}
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   )
 }

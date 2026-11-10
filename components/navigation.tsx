@@ -1,110 +1,107 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Globe } from "lucide-react"
+import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
+import { AnimatePresence, motion } from "framer-motion"
+import { Menu, X } from "lucide-react"
 import { useLanguage } from "@/context/language-context"
 import { useTranslations } from "@/hooks/use-translations"
+import { HTML_LANG, LANGUAGES, sectionPath, translatePath } from "@/lib/i18n"
+import { cn } from "@/lib/utils"
 import { Logo } from "./logo"
+import { EASE_OUT_SOFT } from "@/lib/motion"
+
+function LanguageSwitch() {
+  const { language } = useLanguage()
+  const pathname = usePathname() ?? "/"
+  const t = useTranslations()
+
+  return (
+    <div role="group" aria-label={t.common.language} className="flex items-center gap-1 font-mono text-xs">
+      {LANGUAGES.map((code) => (
+        <a
+          key={code}
+          href={translatePath(pathname, code)}
+          hrefLang={HTML_LANG[code]}
+          lang={HTML_LANG[code]}
+          aria-current={language === code ? "true" : undefined}
+          className={cn(
+            "flex h-8 items-center rounded-md px-2 uppercase transition-colors",
+            language === code ? "bg-raised text-foreground" : "text-muted-foreground hover:text-foreground",
+          )}
+        >
+          {code}
+        </a>
+      ))}
+    </div>
+  )
+}
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const { language, setLanguage } = useLanguage()
   const t = useTranslations()
+  const { language } = useLanguage()
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
+    const handleScroll = () => setScrolled(window.scrollY > 24)
+    handleScroll()
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const navItems = [
-    { name: t.nav.home, href: "#hero" },
-    { name: t.nav.about, href: "#about" },
-    { name: t.nav.skills, href: "#skills" },
-    { name: t.nav.projects, href: "#projects" },
-    { name: t.nav.contact, href: "#contact" },
-  ]
+  useEffect(() => {
+    document.documentElement.style.overflow = isOpen ? "hidden" : ""
+    return () => {
+      document.documentElement.style.overflow = ""
+    }
+  }, [isOpen])
 
-  if (!mounted) return null
+  const navItems = [
+    { name: t.nav.about, href: sectionPath(language, "about") },
+    { name: t.nav.skills, href: sectionPath(language, "skills") },
+    { name: t.nav.projects, href: sectionPath(language, "projects") },
+    { name: t.nav.contact, href: sectionPath(language, "contact") },
+  ]
 
   return (
     <>
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : ""
-        }`}
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-200",
+          scrolled ? "border-border bg-background/90 backdrop-blur-md" : "border-transparent",
+        )}
       >
-        <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <motion.a
-            href="#hero"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Logo size="sm" />
-          </motion.a>
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 md:px-8">
+          <a href={sectionPath(language, "hero")} aria-label={t.nav.home} className="flex items-center gap-3 text-foreground">
+            <Logo size={28} />
+            <span className="text-sm font-medium">Arthur Camponez</span>
+          </a>
 
-          <ul className="hidden md:flex items-center gap-8">
-            {navItems.map((item, i) => (
-              <motion.li
-                key={item.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <a
-                  href={item.href}
-                  className="text-muted-foreground hover:text-primary transition-colors relative group"
-                >
+          <ul className="hidden items-center gap-8 md:flex">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className="text-sm text-subtle transition-colors hover:text-foreground">
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                 </a>
-              </motion.li>
+              </li>
             ))}
           </ul>
 
-          <div className="flex items-center gap-4">
-            <div className="hidden md:flex gap-2 items-center">
-              <Globe size={18} className="text-muted-foreground" />
-              <button
-                onClick={() => setLanguage('pt')}
-                className={`px-3 py-1 rounded-lg text-sm transition-colors ${
-                  language === 'pt'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                PT
-              </button>
-              <button
-                onClick={() => setLanguage('en')}
-                className={`px-3 py-1 rounded-lg text-sm transition-colors ${
-                  language === 'en'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                EN
-              </button>
-            </div>
-
-            <button onClick={() => setIsOpen(true)} className="md:hidden p-2 text-foreground" aria-label={t.common.home}>
-              <Menu size={24} />
-            </button>
+          <div className="hidden md:block">
+            <LanguageSwitch />
           </div>
+
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className="-mr-2 cursor-pointer rounded-md p-2 text-foreground md:hidden"
+            aria-label={t.common.menu}
+          >
+            <Menu size={20} strokeWidth={1.5} />
+          </button>
         </nav>
-      </motion.header>
+      </header>
 
       <AnimatePresence>
         {isOpen && (
@@ -112,75 +109,37 @@ export function Navigation() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-background md:hidden"
+            transition={{ duration: 0.2, ease: EASE_OUT_SOFT }}
+            className="fixed inset-0 z-[100] flex flex-col bg-background px-6 md:hidden"
           >
-            <motion.button
-              initial={{ opacity: 0, rotate: -90 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: 90 }}
-              onClick={() => setIsOpen(false)}
-              className="absolute top-6 right-6 p-2 text-foreground"
-              aria-label="Fechar menu"
-            >
-              <X size={24} />
-            </motion.button>
+            <div className="flex h-16 items-center justify-between">
+              <Logo size={28} />
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="-mr-2 cursor-pointer rounded-md p-2 text-foreground"
+                aria-label={t.common.closeMenu}
+              >
+                <X size={20} strokeWidth={1.5} />
+              </button>
+            </div>
 
-            <nav className="flex flex-col items-center justify-center h-full gap-8">
-              {navItems.map((item, i) => (
-                <motion.a
-                  key={item.name}
+            <nav className="mt-12 flex flex-col gap-2">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 50 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="text-4xl font-bold text-foreground hover:text-primary transition-colors"
+                  className="py-2 text-3xl font-medium text-foreground transition-colors hover:text-accent"
                 >
                   {item.name}
-                </motion.a>
+                </a>
               ))}
-
-              <div className="flex gap-4 mt-8 border-t border-border pt-8">
-                <button
-                  onClick={() => {
-                    setLanguage('pt')
-                    setIsOpen(false)
-                  }}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    language === 'pt'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'border border-border text-foreground'
-                  }`}
-                >
-                  PT
-                </button>
-                <button
-                  onClick={() => {
-                    setLanguage('en')
-                    setIsOpen(false)
-                  }}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    language === 'en'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'border border-border text-foreground'
-                  }`}
-                >
-                  EN
-                </button>
-              </div>
             </nav>
 
-            <motion.div
-              className="absolute inset-0 -z-10"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-              <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-            </motion.div>
+            <div className="mt-auto border-t border-border py-6">
+              <LanguageSwitch />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

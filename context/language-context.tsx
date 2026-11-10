@@ -1,53 +1,20 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { Language, detectBrowserLanguage } from '@/config/translations'
+import { createContext, useContext, type ReactNode } from 'react'
+import type { Language } from '@/config/translations'
+import { DEFAULT_LANGUAGE } from '@/lib/i18n'
 
-interface LanguageContextType {
+const LanguageContext = createContext<Language>(DEFAULT_LANGUAGE)
+
+interface LanguageProviderProps {
   language: Language
-  setLanguage: (lang: Language) => void
+  children: ReactNode
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
-
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('pt')
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language | null
-    const detectedLanguage = savedLanguage || detectBrowserLanguage()
-    
-    setLanguageState(detectedLanguage)
-    setMounted(true)
-  }, [])
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang)
-    localStorage.setItem('language', lang)
-  }
-
-  // Evita hydration mismatch
-  if (!mounted) {
-    return <>{children}</>
-  }
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
-      {children}
-    </LanguageContext.Provider>
-  )
+export function LanguageProvider({ language, children }: LanguageProviderProps) {
+  return <LanguageContext.Provider value={language}>{children}</LanguageContext.Provider>
 }
 
-export function useLanguage() {
-  const context = useContext(LanguageContext)
-  if (!context) {
-    // Retorna um valor padrão em vez de lançar erro
-    // Isso é importante para SSR/build time
-    return {
-      language: 'pt' as Language,
-      setLanguage: () => {},
-    }
-  }
-  return context
+export function useLanguage(): { language: Language } {
+  return { language: useContext(LanguageContext) }
 }

@@ -25,10 +25,6 @@ function getUpstashLimiter(namespace: string, { maxRequests, windowMs }: RateLim
   return limiter
 }
 
-/**
- * Uses Upstash Redis when configured, so the limit is shared across serverless instances.
- * Falls back to the per-instance in-memory limiter when Upstash is not configured or unreachable.
- */
 export async function isWithinRateLimit(namespace: string, identifier: string, rule: RateLimitRule): Promise<boolean> {
   const limiter = getUpstashLimiter(namespace, rule)
   if (limiter) {

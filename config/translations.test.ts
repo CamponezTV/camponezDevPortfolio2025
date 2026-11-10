@@ -1,16 +1,16 @@
-import { getTranslations, translations, detectBrowserLanguage } from '@/config/translations'
+import { getTranslations, translations } from '@/config/translations'
 
 describe('Translations', () => {
   it('deve ter traduções para português', () => {
     const pt = getTranslations('pt')
     expect(pt.nav.home).toBe('Início')
-    expect(pt.hero.description).toBeDefined()
+    expect(pt.hero.summary).toBeDefined()
   })
 
   it('deve ter traduções para inglês', () => {
     const en = getTranslations('en')
     expect(en.nav.home).toBe('Home')
-    expect(en.hero.description).toBeDefined()
+    expect(en.hero.summary).toBeDefined()
   })
 
   it('deve ter todas as seções em ambas as linguagens', () => {
@@ -30,25 +30,41 @@ describe('Translations', () => {
 
   it('deve ter todas as chaves de herói em português', () => {
     const pt = getTranslations('pt')
-    expect(pt.hero.description).toBeDefined()
-    expect(pt.hero.passion).toBeDefined()
-    expect(pt.hero.scroll).toBeDefined()
-    expect(pt.hero.since).toBeDefined()
+    expect(pt.hero.role).toBeDefined()
+    expect(pt.hero.summary).toBeDefined()
+    expect(pt.hero.ctaProjects).toBeDefined()
+    expect(pt.hero.ctaContact).toBeDefined()
   })
 
-  it('deve ter 6 projetos na lista (4 na section + 2 no catálogo)', () => {
+  it('deve ter as mesmas imagens de projeto em PT e EN', () => {
     const pt = getTranslations('pt')
-    expect(pt.projects.items).toHaveLength(6)
-    expect(pt.projects.items[0].title).toBe('O Incidente WebSite')
-    expect(pt.projects.items[3].title).toBe('Novasyn LTDA')
-    expect(pt.projects.items[4].title).toBe('Portfolio 2024')
-    expect(pt.projects.items[5].title).toBe('Portfolio 2026')
+    const en = getTranslations('en')
+    expect(en.projects.items.map((p) => p.image)).toEqual(pt.projects.items.map((p) => p.image))
+  })
+
+  const findProject = (title: string) => getTranslations('pt').projects.items.find((project) => project.title === title)
+
+  it('deve listar os projetos mais recentes primeiro', () => {
+    const titles = getTranslations('pt').projects.items.map((project) => project.title)
+    expect(titles).toEqual([
+      'OCL Advogados',
+      'Grupo Sartoretto',
+      'O Incidente WebSite',
+      'Banestes Asset',
+      'Vende.AI',
+      'Novasyn LTDA',
+      'Portfolio 2024',
+      'Portfolio 2026',
+    ])
+  })
+
+  it('deve ter os sites da OCL Advogados e do Grupo Sartoretto com link e imagem', () => {
+    expect(findProject('OCL Advogados')).toMatchObject({ link: 'https://ocladvogados.adv.br/', image: '/ocl.jpg' })
+    expect(findProject('Grupo Sartoretto')).toMatchObject({ link: 'https://sartoretto.novasyn.com.br/', image: '/sartoretto.jpg' })
   })
 
   it('deve ter Portfolio 2024 com todas as informações corretas', () => {
-    const pt = getTranslations('pt')
-    const portfolio2024 = pt.projects.items[4]
-    expect(portfolio2024.title).toBe('Portfolio 2024')
+    const portfolio2024 = findProject('Portfolio 2024')!
     expect(portfolio2024.category).toBe('Full Stack & Design')
     expect(portfolio2024.tags).toContain('Next.js 14')
     expect(portfolio2024.tags).toContain('Three.js')
@@ -59,9 +75,7 @@ describe('Translations', () => {
   })
 
   it('deve ter Portfolio 2026 com todas as informações corretas', () => {
-    const pt = getTranslations('pt')
-    const portfolio2026 = pt.projects.items[5]
-    expect(portfolio2026.title).toBe('Portfolio 2026')
+    const portfolio2026 = findProject('Portfolio 2026')!
     expect(portfolio2026.category).toBe('Design & Desenvolvimento')
     expect(portfolio2026.tags).toContain('Embla Carousel')
     expect(portfolio2026.details).toBeDefined()
@@ -79,19 +93,9 @@ describe('Translations', () => {
     })
   })
 
-  it('deve detectar português no navegador', () => {
-    Object.defineProperty(navigator, 'language', {
-      value: 'pt-BR',
-      configurable: true,
-    })
-    expect(detectBrowserLanguage()).toBe('pt')
-  })
-
-  it('deve detectar inglês como padrão para idiomas não portugueses', () => {
-    Object.defineProperty(navigator, 'language', {
-      value: 'en-US',
-      configurable: true,
-    })
-    expect(detectBrowserLanguage()).toBe('en')
+  it('deve usar o mesmo slug para cada projeto nos dois idiomas', () => {
+    const slugs = (language: 'pt' | 'en') => getTranslations(language).projects.items.map((project) => project.slug)
+    expect(slugs('en')).toEqual(slugs('pt'))
+    expect(new Set(slugs('pt')).size).toBe(slugs('pt').length)
   })
 })

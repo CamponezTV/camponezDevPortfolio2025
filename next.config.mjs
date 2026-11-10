@@ -32,12 +32,14 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   compress: true,
+  experimental: {
+    globalNotFound: true,
+  },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }]
   },
   env: {
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-    // Exposes the site key to the browser under either variable name.
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.TURNSTILE_SITE_KEY || process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '',
   },
 }

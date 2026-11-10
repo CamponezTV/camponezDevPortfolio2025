@@ -1,63 +1,23 @@
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { LanguageProvider, useLanguage } from '@/context/language-context'
 import React from 'react'
+import { render, screen } from '@testing-library/react'
+import { LanguageProvider, useLanguage } from '@/context/language-context'
 
-const TestComponent = () => {
-  const { language, setLanguage } = useLanguage()
-  return (
-    <div>
-      <span data-testid="language">{language}</span>
-      <button onClick={() => setLanguage('en')}>Set English</button>
-      <button onClick={() => setLanguage('pt')}>Set Portuguese</button>
-    </div>
-  )
-}
+const CurrentLanguage = () => <span data-testid="language">{useLanguage().language}</span>
 
-describe('Language Context', () => {
-  it('should provide language context', () => {
+describe('LanguageProvider', () => {
+  it('exposes the language chosen by the route', () => {
     render(
-      <LanguageProvider>
-        <TestComponent />
-      </LanguageProvider>
+      <LanguageProvider language="en">
+        <CurrentLanguage />
+      </LanguageProvider>,
     )
-    
-    const language = screen.getByTestId('language')
-    expect(language).toBeInTheDocument()
+
+    expect(screen.getByTestId('language')).toHaveTextContent('en')
   })
 
-  it('should update language state', async () => {
-    const u = userEvent.setup()
-    
-    render(
-      <LanguageProvider>
-        <TestComponent />
-      </LanguageProvider>
-    )
-    
-    const button = screen.getByRole('button', { name: /set english/i })
-    await u.click(button)
-    
-    await waitFor(() => {
-      const language = screen.getByTestId('language')
-      expect(language.textContent).toBe('en')
-    })
-  })
+  it('falls back to Portuguese outside a provider', () => {
+    render(<CurrentLanguage />)
 
-  it('should persist language to localStorage', async () => {
-    const u = userEvent.setup()
-    
-    render(
-      <LanguageProvider>
-        <TestComponent />
-      </LanguageProvider>
-    )
-    
-    const button = screen.getByRole('button', { name: /set portuguese/i })
-    await u.click(button)
-    
-    await waitFor(() => {
-      expect(localStorage.getItem('language')).toBe('pt')
-    })
+    expect(screen.getByTestId('language')).toHaveTextContent('pt')
   })
 })

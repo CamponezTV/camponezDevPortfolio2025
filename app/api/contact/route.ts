@@ -3,6 +3,7 @@ import { validateEmail } from '@/lib/security'
 import { isWithinRateLimit } from '@/lib/rate-limit'
 import { verifyTurnstileToken } from '@/lib/turnstile'
 import { securityConfig } from '@/lib/security-config'
+import { PERSON, SITE_URL } from '@/lib/site'
 import {
   buildAdminNotificationEmail,
   buildVisitorConfirmationEmail,
@@ -10,8 +11,7 @@ import {
 } from '@/lib/contact-email'
 
 const MAX_PAYLOAD_CHARS = 10_000
-const SENDER_NAME = 'CamponezDEV'
-const FALLBACK_SITE_URL = 'https://camponez.com.br'
+const SENDER_NAME = PERSON.shortName
 
 const FIELD_LIMITS = {
   name: { min: 2, max: 100, label: 'Nome' },
@@ -22,7 +22,7 @@ const FIELD_LIMITS = {
 type ValidatedField = keyof typeof FIELD_LIMITS
 
 function allowedOrigin(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_SITE_URL
+  return process.env.NEXT_PUBLIC_SITE_URL || SITE_URL
 }
 
 function corsHeaders() {
@@ -133,13 +133,13 @@ async function sendContactEmails(contact: ContactMessage, clientIp: string, conf
   const sender = { name: SENDER_NAME, email: config.senderEmail }
 
   const visitorEmail = new SendSmtpEmail()
-  visitorEmail.subject = '✅ Mensagem Recebida com Sucesso!'
+  visitorEmail.subject = 'Recebi sua mensagem'
   visitorEmail.htmlContent = buildVisitorConfirmationEmail(contact)
   visitorEmail.sender = sender
   visitorEmail.to = [{ email: contact.email, name: contact.name }]
 
   const adminEmail = new SendSmtpEmail()
-  adminEmail.subject = `🎯 Novo Contato: ${contact.subject}`
+  adminEmail.subject = `Novo contato pelo site: ${contact.subject}`
   adminEmail.htmlContent = buildAdminNotificationEmail(contact, clientIp)
   adminEmail.sender = sender
   adminEmail.to = [{ email: config.adminEmail }]

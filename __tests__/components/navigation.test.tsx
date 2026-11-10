@@ -1,57 +1,57 @@
-import { render, screen } from '@testing-library/react'
+import React from 'react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Navigation } from '@/components/navigation'
 import { LanguageProvider } from '@/context/language-context'
-import React from 'react'
+import type { Language } from '@/config/translations'
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => {
-    // eslint-disable-next-line jsx-a11y/alt-text
-    return <img {...props} />
-  },
+const mockPathname = jest.fn(() => '/')
+
+jest.mock('next/navigation', () => ({
+  usePathname: () => mockPathname(),
 }))
 
-jest.mock('next-themes', () => ({
-  useTheme: () => ({
-    theme: 'dark',
-    setTheme: jest.fn(),
-  }),
-}))
+function renderNavigation(language: Language, pathname: string) {
+  mockPathname.mockReturnValue(pathname)
+  return render(
+    <LanguageProvider language={language}>
+      <Navigation />
+    </LanguageProvider>,
+  )
+}
 
-const wrapper = ({ children }: { children: React.ReactNode }) =>
-  React.createElement(LanguageProvider, null, children)
+describe('Navigation', () => {
+  it('links the logo to the top of the home page', () => {
+    renderNavigation('pt', '/')
 
-describe('Navigation Component', () => {
-  it('should render navigation menu', () => {
-    render(<Navigation />, { wrapper })
-    
-    const nav = screen.getByRole('navigation')
-    expect(nav).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Início' })).toHaveAttribute('href', '/#hero')
   })
 
-  it('should render mobile menu button', () => {
-    render(<Navigation />, { wrapper })
-    
-    const button = screen.getByRole('button', { name: /home/i })
-    expect(button).toBeInTheDocument()
+  it('points section links to the home page of the current language', () => {
+    renderNavigation('en', '/en/projects/ocl-advogados')
+
+    expect(screen.getByRole('link', { name: 'About' })).toHaveAttribute('href', '/en#about')
+    expect(screen.getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '/en#projects')
+    expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '/en#contact')
   })
 
-  it('should handle language change', async () => {
+  it('links each language to the same page in that language', () => {
+    renderNavigation('pt', '/projetos/ocl-advogados')
+
+    const english = screen.getAllByRole('link', { name: 'en' })[0]
+    expect(english).toHaveAttribute('href', '/en/projects/ocl-advogados')
+    expect(english).toHaveAttribute('hreflang', 'en')
+    expect(screen.getAllByRole('link', { name: 'pt' })[0]).toHaveAttribute('aria-current', 'true')
+  })
+
+  it('opens and closes the mobile menu', async () => {
     const user = userEvent.setup()
-    render(<Navigation />, { wrapper })
-    
-    const ptButton = screen.queryByRole('button', { name: 'PT' })
-    if (ptButton) {
-      await user.click(ptButton)
-      expect(ptButton).toHaveClass('bg-primary')
-    }
-  })
+    renderNavigation('pt', '/')
 
-  it('should have logo link', () => {
-    render(<Navigation />, { wrapper })
-    
-    const link = screen.getByRole('link', { name: /logo/i })
-    expect(link).toHaveAttribute('href', '#hero')
+    await user.click(screen.getByRole('button', { name: 'Abrir menu' }))
+    expect(screen.getByRole('button', { name: 'Fechar menu' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Fechar menu' }))
+    await waitFor(() => expect(screen.queryByRole('button', { name: 'Fechar menu' })).not.toBeInTheDocument())
   })
 })

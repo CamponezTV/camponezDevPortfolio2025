@@ -1,174 +1,141 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
-import { ChevronDown, Linkedin, Github } from "lucide-react"
+import { useEffect, useRef } from "react"
+import { createTimeline, scrambleText, stagger } from "animejs"
 import { useTranslations } from "@/hooks/use-translations"
+import {
+  clearAnimatedStyles,
+  easeOutSoft,
+  markRevealed,
+  prefersReducedMotion,
+  setStyles,
+  splitIntoClippedChars,
+} from "@/lib/motion"
+import { ArrowLink } from "./arrow-link"
 
-const socialLinks = [
-  { icon: Linkedin, href: "https://www.linkedin.com/in/arthurcmarinho/", label: "LinkedIn" },
-  { icon: Github, href: "https://github.com/", label: "GitHub" },
+type Token = { text: string; tone: "key" | "string" | "number" | "plain" | "muted" }
+
+const CODE_LINES: Token[][] = [
+  [{ text: "const ", tone: "muted" }, { text: "arthur", tone: "plain" }, { text: " = {", tone: "muted" }],
+  [{ text: "  role", tone: "key" }, { text: ": ", tone: "muted" }, { text: "'full stack engineer'", tone: "string" }, { text: ",", tone: "muted" }],
+  [{ text: "  now", tone: "key" }, { text: ": [", tone: "muted" }, { text: "'OCL Advogados'", tone: "string" }, { text: ", ", tone: "muted" }, { text: "'NOVAsyn'", tone: "string" }, { text: "],", tone: "muted" }],
+  [{ text: "  stack", tone: "key" }, { text: ": [", tone: "muted" }, { text: "'Next.js'", tone: "string" }, { text: ", ", tone: "muted" }, { text: "'Node.js'", tone: "string" }, { text: ", ", tone: "muted" }, { text: "'PostgreSQL'", tone: "string" }, { text: "],", tone: "muted" }],
+  [{ text: "  focus", tone: "key" }, { text: ": [", tone: "muted" }, { text: "'AI'", tone: "string" }, { text: ", ", tone: "muted" }, { text: "'data'", tone: "string" }, { text: "]", tone: "muted" }, { text: ",", tone: "muted" }],
+  [{ text: "  base", tone: "key" }, { text: ": ", tone: "muted" }, { text: "'Vila Velha, ES'", tone: "string" }, { text: ",", tone: "muted" }],
+  [{ text: "  since", tone: "key" }, { text: ": ", tone: "muted" }, { text: "2021", tone: "number" }, { text: ",", tone: "muted" }],
+  [{ text: "}", tone: "muted" }],
 ]
 
-export function HeroSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const t = useTranslations()
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
+const TONE_CLASS: Record<Token["tone"], string> = {
+  key: "text-accent",
+  string: "text-[#d8c9a3]",
+  number: "text-[#d9a7b8]",
+  plain: "text-foreground",
+  muted: "text-muted-foreground",
+}
+
+function playIntro(section: HTMLElement) {
+  const queryAll = (selector: string) => Array.from(section.querySelectorAll<HTMLElement>(selector))
+  const names = queryAll("[data-hero-name]")
+  const parts = queryAll("[data-hero-part]")
+  const lines = queryAll("[data-code-line]")
+  const strings = queryAll("[data-code-string]")
+  const chars = names.flatMap(splitIntoClippedChars)
+
+  setStyles(chars, { translateY: "100%" })
+  setStyles(parts, { opacity: 0, translateY: 12 })
+  setStyles(lines, { opacity: 0, translateX: -8 })
+  markRevealed(section)
+
+  return createTimeline({
+    defaults: { ease: easeOutSoft, duration: 800 },
+    onComplete: () => clearAnimatedStyles([...chars, ...parts, ...lines]),
   })
+    .add(chars, { translateY: "0%", delay: stagger(28) }, 0)
+    .add(parts, { opacity: 1, translateY: 0, delay: stagger(80) }, 260)
+    .add(lines, { opacity: 1, translateX: 0, duration: 500, delay: stagger(60) }, 360)
+    .add(strings, { innerHTML: scrambleText({ chars: "a-z", cursor: true, settleDuration: 240 }), delay: stagger(70) }, 520)
+}
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8])
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+function CodeCard() {
+  return (
+    <figure data-reveal-item data-hero-part className="overflow-hidden rounded-2xl border border-border bg-deep">
+      <div className="flex items-center justify-between border-b border-border px-5 py-3">
+        <span className="font-mono text-xs text-subtle">arthur.ts</span>
+        <span className="flex gap-1.5" aria-hidden>
+          <span className="size-2.5 rounded-full bg-raised" />
+          <span className="size-2.5 rounded-full bg-raised" />
+          <span className="size-2.5 rounded-full bg-raised" />
+        </span>
+      </div>
+      <pre className="overflow-x-auto px-5 py-6 font-mono text-[13px] leading-7 md:text-sm">
+        <code>
+          {CODE_LINES.map((line, lineIndex) => (
+            <div key={lineIndex} data-code-line className="flex">
+              <span className="w-8 shrink-0 select-none text-right text-muted-foreground/50 tabular-nums">{lineIndex + 1}</span>
+              <span className="pl-5 whitespace-pre">
+                {line.map((token, tokenIndex) => (
+                  <span
+                    key={tokenIndex}
+                    data-code-string={token.tone === "string" ? "" : undefined}
+                    className={TONE_CLASS[token.tone]}
+                  >
+                    {token.text}
+                  </span>
+                ))}
+              </span>
+            </div>
+          ))}
+        </code>
+      </pre>
+    </figure>
+  )
+}
 
-  const smoothY = useSpring(y, { stiffness: 100, damping: 30 })
-  const smoothOpacity = useSpring(opacity, { stiffness: 100, damping: 30 })
-  const smoothScale = useSpring(scale, { stiffness: 100, damping: 30 })
+export function HeroSection() {
+  const t = useTranslations()
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section || "revealed" in section.dataset) return
+    if (prefersReducedMotion()) {
+      markRevealed(section)
+      return
+    }
+    playIntro(section)
+  }, [])
 
   return (
-    <section
-      ref={containerRef}
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden noise"
-    >
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          style={{ y: smoothY }}
-          className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-[100px] will-change-transform"
-        />
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "30%"]) }}
-          className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-[120px] will-change-transform"
-        />
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "70%"]) }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] will-change-transform hidden lg:block"
-        />
-      </div>
-
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
-
-      <motion.div
-        style={{ opacity: smoothOpacity, scale: smoothScale }}
-        className="relative z-10 container mx-auto px-4 sm:px-6 text-center"
-      >
-        <motion.h1 style={{ y: textY }} className="relative">
-          <motion.span
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.76, 0, 0.24, 1] }}
-            className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter text-balance leading-none"
+    <section ref={sectionRef} id="hero" data-reveal="items" className="relative flex min-h-svh items-center pt-16">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 py-16 md:px-8 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div>
+          <p className="text-sm text-muted-foreground">
+            {t.hero.role} · {t.hero.location}
+          </p>
+          <h1
+            data-reveal-item
+            data-hero-name
+            className="mt-6 font-wide text-[2.5rem] font-medium uppercase leading-[0.95] tracking-[-0.02em] text-foreground sm:text-6xl lg:text-7xl"
           >
-            Arthur
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.76, 0, 0.24, 1] }}
-            className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter text-gradient leading-none"
-          >
-            Camponez
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter leading-none"
-          >
-            Marinho
-          </motion.span>
-        </motion.h1>
-
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 1.5, delay: 1, ease: [0.76, 0, 0.24, 1] }}
-          className="w-full max-w-md mx-auto h-px bg-gradient-to-r from-transparent via-primary to-transparent mt-12"
-        />
-
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          className="mt-6 sm:mt-8 text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty px-4"
-        >
-          {t.hero.description}
-          <br />
-          <span className="text-primary">{t.hero.passion}</span>
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          className="flex items-center justify-center gap-3 sm:gap-4 md:gap-6 mt-8 sm:mt-12 flex-wrap px-4"
-        >
-          {socialLinks.map((social, i) => (
-            <motion.a
-              key={social.label}
-              href={social.href}
-              aria-label={social.label}
-              whileHover={{ scale: 1.2, y: -5 }}
-              whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4 + i * 0.1 }}
-              className="p-3 text-muted-foreground hover:text-primary transition-colors border border-border rounded-full hover:border-primary/50 hover:bg-primary/5"
-            >
-              <social.icon size={20} />
-            </motion.a>
-          ))}
-        </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute left-6 top-1/2 -translate-y-1/2 hidden lg:block"
-      >
-        <div className="writing-mode-vertical text-xs tracking-[0.3em] text-muted-foreground uppercase">
-          {t.hero.since}
+            <span className="block">Arthur</span>
+            <span className="block text-accent">Camponez</span>
+          </h1>
+          <p className="mt-8 max-w-xl text-lg leading-8 text-subtle text-pretty">
+            {t.hero.summary}
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <ArrowLink href="#projects" className="text-base">
+              {t.hero.ctaProjects}
+            </ArrowLink>
+            <ArrowLink href="#contact" className="text-base">
+              {t.hero.ctaContact}
+            </ArrowLink>
+          </div>
         </div>
-      </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
-      >
-        <motion.a
-          href="#about"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-        >
-          <span className="text-xs tracking-widest uppercase">{t.hero.scroll}</span>
-          <ChevronDown size={20} />
-        </motion.a>
-      </motion.div>
-
-      <motion.div
-        animate={{
-          rotate: 360,
-        }}
-        transition={{
-          rotate: { duration: 30, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
-        }}
-        className="absolute top-1/4 right-1/4 w-20 h-20 border border-primary/20 rounded-full hidden lg:block will-change-transform"
-      />
-      <motion.div
-        animate={{
-          rotate: -360,
-        }}
-        transition={{
-          rotate: { duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "linear" },
-        }}
-        className="absolute bottom-1/3 left-1/4 w-12 h-12 border border-accent/20 rounded-lg hidden lg:block will-change-transform"
-      />
+        <CodeCard />
+      </div>
     </section>
   )
 }

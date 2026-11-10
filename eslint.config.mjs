@@ -10,7 +10,6 @@ const eslintConfig = [
     rules: { '@typescript-eslint/no-explicit-any': 'off', '@next/next/no-img-element': 'off' },
   },
   {
-    // Hydration-safe pattern: state is read from the browser after mount to avoid SSR mismatches.
     rules: { 'react-hooks/set-state-in-effect': 'warn' },
   },
 ]
